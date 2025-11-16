@@ -102,5 +102,16 @@ public class Student extends User{
         return completedLessons;
     }
 
+    public List<Course> getEnrolledCourses(CourseService courseService) {
+        List<Course> enrolledCourses = new ArrayList<>();
+        for (String courseID : progress.keySet()) {
+            Course course = courseService.getRecord(courseID);
+            if (course != null) {
+                enrolledCourses.add(course);
+            }
+        }
+        return enrolledCourses;
+    }
+
 
 }
