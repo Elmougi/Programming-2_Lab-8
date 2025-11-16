@@ -1,8 +1,11 @@
 package GUI;
 
 import UserManagement.User;
+import UserManagement.Student;
+import UserManagement.Instructor;
 import Database.UserService;
 import Utilities.*;
+
 
 
 import javax.swing.*;
@@ -92,7 +95,7 @@ public class login extends JFrame {
         }
 
         if (loggedUser.getRole().equalsIgnoreCase("Student")) {
-            new stdMainWindow();
+            new stdMainWindow( (Student) loggedUser);
         } else {
             new insMainWindow();
         }
