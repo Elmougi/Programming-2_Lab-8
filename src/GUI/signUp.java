@@ -101,7 +101,7 @@ public class signUp extends JFrame {
         User newUser;
         if (role.equalsIgnoreCase("Student")) {
             newUser = new Student(name, String.valueOf(id), email, hashedPassword);
-            new stdMainWindow();
+            new stdMainWindow((Student) newUser);
         } else {
             newUser = new Instructor(name, String.valueOf(id), email, hashedPassword);
             new insMainWindow();
