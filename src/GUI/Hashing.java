@@ -1,6 +1,5 @@
-package user_account;
+package GUI;
 
-import java.util.*;
 import java.security.*;
 
 public class Hashing {
