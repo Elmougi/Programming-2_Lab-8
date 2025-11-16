@@ -1,33 +1,45 @@
-package database;
+package Database;
 
 import javax.json.*;
 import java.util.*;
 import java.io.*;
-
-import utilities.Validation;
 
 public abstract class JsonDatabaseManager<Obj extends DataInfo> {
     private ArrayList<Obj> records = new ArrayList<>();
     private String filename;
 
     public JsonDatabaseManager(String filename) throws IllegalArgumentException {
+        records = new ArrayList<>();
+
         if (filename.equals("user")) {
-            this.filename = "user.json";
+            this.filename = "users.json";
         } else if (filename.equals("course")) {
             this.filename = "courses.json";
         } else{
             throw new IllegalArgumentException("Invalid filename");
         }
+
+        loadFromFile();
     }
 
     public abstract ArrayList<Obj> recordsFromJson(JsonObject all);
     public abstract JsonObject recordsToJson(ArrayList<Obj> records);
 
     public void readFromFile() throws IOException {
-        try (FileInputStream fis = new FileInputStream(filename);
+        File file = new File(filename);
+
+        if (!file.exists() || file.length() == 0) {
+            return;
+        }
+
+        try (FileInputStream fis = new FileInputStream(file);
              JsonReader reader = Json.createReader(fis)) {
 
-            records = recordsFromJson(reader.readObject());
+            JsonObject jsonObject = reader.readObject();
+            records = recordsFromJson(jsonObject);
+
+        } catch (JsonException e) {
+            return; // no problem, empty array will continue
         }
     }
 
@@ -62,6 +74,8 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
             }
         }
         records.add(record);
+
+        saveToFile();
     }
 
     public void deleteRecord(String key) {
@@ -73,16 +87,30 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
             }
         }
         System.out.println("RECORD (TO BE DELETED) NOT FOUND!");
+
+        saveToFile();
     }
 
-    public void saveToFile() throws IOException {
+    public void saveToFile() {
         try (FileOutputStream fos = new FileOutputStream(filename);
              JsonWriter writer = Json.createWriter(fos)) {
             JsonObject jsonObject = recordsToJson(records);
 
             writer.writeObject(jsonObject);
             System.out.println("JSON written to: " + filename);
+        } catch (IOException e) {
+            System.out.println("IO ERROR, save failed");
         }
+    }
+
+    private void loadFromFile() {
+        try {
+            records.clear();
+            readFromFile();
+        } catch (IOException e) {
+            System.out.println("An error occurred while trying to load files: " + e.getMessage());
+        }
+
     }
 
     public int numberOfRecords() {

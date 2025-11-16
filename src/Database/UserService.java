@@ -1,8 +1,8 @@
-package database;
+package Database;
 
 import javax.json.*;
 import java.util.*;
-import Users.*;
+import UserManagement.*;
 
 public class UserService extends JsonDatabaseManager<User> {
     public UserService(){
@@ -61,4 +61,6 @@ public class UserService extends JsonDatabaseManager<User> {
                 .add("users", arrayBuilder.build())
                 .build();
     }
+
+    // remeber to add: update student
 }

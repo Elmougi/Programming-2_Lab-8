@@ -6,22 +6,28 @@
 //    }
 //}
 
+import CourseManagement.*;
+import java.util.*;
+import Database.*;
+import UserManagement.*;
+import Utilities.Validation;
+
 public class Main {
     public static void main(String[] args) {
         try {
-            // Test if JSONObject is available
-            Class<?> jsonClass = Class.forName("org.json.JSONObject");
-            System.out.println("org.json.JSONObject is available!");
 
-            // If we get here, try to use it
-            Object jsonObj = jsonClass.newInstance();
-            System.out.println("Can create JSONObject instance");
+            CourseService coursesData = new CourseService();
+            UserService userData = new UserService();
 
-        } catch (ClassNotFoundException e) {
-            System.out.println("org.json.JSONObject not found in classpath");
-            System.out.println("You need to add the dependency or use manual methods");
+            userData.insertRecord(new Student("as", "123", "abd@gma.com", "394872"));
+            userData.insertRecord(new Instructor("agw", "12ewg3", "abdweg@gma.com", "394eg872"));
+
+            Course one = new Course("2ed", "sojs", "this is desc", "12ewg3", null);
+            one.addLesson(new Lesson("32", "aef", "I am uebfue iyefbew ibweivf"));
+            coursesData.insertRecord(one);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("error; \"" + e.getMessage() + "\"");
         }
+
     }
 }

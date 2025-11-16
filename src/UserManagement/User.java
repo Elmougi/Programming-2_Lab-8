@@ -1,6 +1,8 @@
-package Users;
+package UserManagement;
 
-import database.DataInfo;
+import Database.DataInfo;
+import Utilities.Validation;
+import Database.JsonDatabaseManager;
 
 public abstract class User implements DataInfo {
     private String name;
@@ -10,13 +12,17 @@ public abstract class User implements DataInfo {
     protected String role;
 
     public User(String name, String ID, String email, String password) {
-        this.name = name;
-        this.ID = ID;
-        this.email = email;
-        this.password = password;
+        setName(name);
+        setID(ID);
+        setEmail(email);
+        setPassword(password);
     }
 
     public void setName(String name) {
+        if(!Validation.isValidString(name)){
+            throw new IllegalArgumentException("Invalid name format.");
+        }
+
         this.name = name;
     }
 
@@ -28,7 +34,11 @@ public abstract class User implements DataInfo {
         return this.ID;
     }
 
-    public void changeID(String ID){
+    public void setID(String ID){
+        if(!Validation.isValidString(ID)){
+            throw new IllegalArgumentException("Invalid ID format.");
+        }
+
         this.ID = ID;
     }
 
@@ -37,10 +47,18 @@ public abstract class User implements DataInfo {
     }
 
     public void setEmail(String email){
+        if(!Validation.isValidEmail(email)){
+            throw new IllegalArgumentException("Invalid email format.");
+        }
+
         this.email = email;
     }
 
     public void setPassword(String password){
+        if(!Validation.isValidString(password)){
+            throw new IllegalArgumentException("Invalid password format.");
+        }
+
         this.password = password;
     }
 
