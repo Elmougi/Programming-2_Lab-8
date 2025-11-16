@@ -107,13 +107,13 @@ public class login extends JFrame {
             if (matchesEmail || matchesId) {
 
                 if (user.getPasswordHash().equals(hashedInput)) {
-                    return user; // SUCCESS
+                    return user;
                 } else {
-                    return null; // WRONG PASSWORD
+                    return null;
                 }
             }
         }
-        return null; // USER NOT FOUND
+        return null;
     }
 
 

@@ -3,6 +3,8 @@ package UserManagement;
 import CourseManagement.Course;
 import CourseManagement.Lesson;
 import Database.CourseService;
+import Utilities.Hashing;
+
 import java.util.*;
 
 public class Student extends User{
@@ -10,7 +12,8 @@ public class Student extends User{
     // 2l5olasa: Map<course id, Map<lesson id, is lesson completed?>>
 
     public Student(String name, String ID, String email, String password){
-        super(name, ID, email, password);
+        String passwordHash = Hashing.hashPassword(password);
+        super(name, ID, email, passwordHash);
         this.role = "Student";
     }
 
@@ -97,6 +100,17 @@ public class Student extends User{
             throw new IllegalArgumentException("Invalid Course ID");
         }
         return completedLessons;
+    }
+
+    public List<Course> getEnrolledCourses(CourseService courseService) {
+        List<Course> enrolledCourses = new ArrayList<>();
+        for (String courseID : progress.keySet()) {
+            Course course = courseService.getRecord(courseID);
+            if (course != null) {
+                enrolledCourses.add(course);
+            }
+        }
+        return enrolledCourses;
     }
 
 
