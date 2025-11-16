@@ -75,5 +75,20 @@ public class Lesson implements DataInfo {
         return Collections.unmodifiableList(resources);
     }
 
+    public boolean searchResource(String resource) {
+        for(String current : resources){
+            if (resource != null && resource.equals(current))
+                return true;
+        }
+        return false;
+    }
+
+    public void removeResource(String resource) {
+        if(!resources.contains(resource)) {
+            return;
+        }
+        resources.remove(resource);
+    }
+
 
 }

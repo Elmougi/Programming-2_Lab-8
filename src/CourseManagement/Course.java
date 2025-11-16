@@ -96,19 +96,33 @@ public class Course implements DataInfo {
         return Collections.unmodifiableList(students);
     }
 
-    public boolean isStudent(String key){
-        for (int i = 0; i < students.size(); i++) {
-            if (key != null && key.equals(students.get(i).getSearchKey()))
-                return true;
+    public Student searchStudent(String key){
+        for (Student student : students) {
+            if (key != null && key.equals(student.getSearchKey()))
+                return student;
         }
-        return false;
+        return null;
     }
 
-    public boolean isLesson(String key){
+    public Lesson searchLesson(String key){
         for (int i = 0; i < lessons.size(); i++) {
             if (key != null && key.equals(lessons.get(i).getSearchKey()))
-                return true;
+                return lessons.get(i);
         }
-        return false;
+        return null;
+    }
+
+    public void removeStudent(String key){
+        if(searchStudent(key) == null) {
+            return;
+        }
+        students.remove(searchStudent(key));
+    }
+
+    public void removeLesson(String key){
+        if(searchLesson(key) == null) {
+            return;
+        }
+        lessons.remove(searchLesson(key));
     }
 }
