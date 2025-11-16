@@ -17,6 +17,8 @@ public abstract class User implements DataInfo {
     }
 
     public void setName(String name) {
+        
+
         this.name = name;
     }
 
