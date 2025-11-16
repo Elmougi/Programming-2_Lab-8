@@ -1,1 +1,54 @@
-{"users":[{"id":"S001","name":"Ahmed Mohamed","email":"ahmed@student.com","password":"pass123","role":"Student"},{"id":"S002","name":"Sara Ali","email":"sara@student.com","password":"pass456","role":"Student"},{"id":"I001","name":"Dr. Hassan","email":"hassan@instructor.com","password":"63cb9c6fa2d65784658539a93ad47f2274a02ddff344537beb97bd399938ad22","role":"Instructor"}]}
+
+{
+    "users": [
+        {
+            "id": "S001",
+            "name": "Ahmed Mohamed",
+            "email": "ahmed@student.com",
+            "password": "8bbfa6868caa6cabcb87a7a745cd205a574a56dd9ecb1b008377e8df70015f8f",
+            "role": "Student"
+        },
+        {
+            "id": "S002",
+            "name": "Sara Ali",
+            "email": "sara@student.com",
+            "password": "691a4346515b271ec2292b9a6810f7c0062a4639b0619a4662d1861d4470c426",
+            "role": "Student"
+        },
+        {
+            "id": "I001",
+            "name": "Dr. Hassan",
+            "email": "hassan@instructor.com",
+            "password": "3dcc798f9e64598cec4f9a7640ff4a11237590c922f7cfb80b6cb0b3d4f75ced",
+            "role": "Instructor"
+        },
+        {
+            "id": "1234",
+            "name": "user1",
+            "email": "abc12@hj.com",
+            "password": "8bfd946784a4f0d377628af1d004e07eb8208a980acb040194b09e8142cccc7c",
+            "role": "Student"
+        },
+        {
+            "id": "3468",
+            "name": "student1",
+            "email": "student1@skillforge.com",
+            "password": "98f498e6cff18a9e470321448ebc7865b560ed4df2babf604ef9130aaf5acd52",
+            "role": "Student"
+        },
+        {
+            "id": "1234456",
+            "name": "isthat true?",
+            "email": "debug@debug.com",
+            "password": "bb9df0f6a301d65cb7d508747209a565d27115dc67cb16d6615203a93ddc1b33",
+            "role": "Student"
+        },
+        {
+            "id": "9999",
+            "name": "Dr. z3wf",
+            "email": "dueg@wdniw.com",
+            "password": "c5d3d00592c36d9b3bb330ef5378fa4cf6eae97c6a88d2490bcff4808436aa10",
+            "role": "Instructor"
+        }
+    ]
+}

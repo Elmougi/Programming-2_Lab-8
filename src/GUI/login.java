@@ -6,8 +6,6 @@ import UserManagement.Instructor;
 import Database.UserService;
 import Utilities.*;
 
-
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,13 +109,16 @@ public class login extends JFrame {
         String hashedInput = Hashing.hashPassword(plainPassword);
 
         for (User user : allUsers) {
+//            System.out.println("enterd");
 
             boolean matchesEmail = user.getEmail().equalsIgnoreCase(emailOrId);
             boolean matchesId = user.getSearchKey().equalsIgnoreCase(emailOrId);
 
             if (matchesEmail || matchesId) {
-
+//                System.out.println("enterd");
+                System.out.println(hashedInput);
                 if (user.getPasswordHash().equals(hashedInput)) {
+//                    System.out.println("here?!");
                     return user;
                 } else {
                     return null;

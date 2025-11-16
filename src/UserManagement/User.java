@@ -57,7 +57,7 @@ public abstract class User implements DataInfo {
         if(!Validation.isValidString(passwordHash)){
             throw new IllegalArgumentException("Invalid password format.");
         }
-
+        System.out.println(passwordHash);
         this.passwordHash = passwordHash;
     }
 

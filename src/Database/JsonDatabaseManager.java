@@ -1,6 +1,7 @@
 package Database;
 
 import javax.json.*;
+import javax.json.stream.JsonGenerator;
 import java.util.*;
 import java.io.*;
 
@@ -92,14 +93,19 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
     }
 
     public void saveToFile() {
-        try (FileOutputStream fos = new FileOutputStream(filename);
-             JsonWriter writer = Json.createWriter(fos)) {
-            JsonObject jsonObject = recordsToJson(records);
+        try (FileOutputStream fos = new FileOutputStream(filename)) {
 
-            writer.writeObject(jsonObject);
-            System.out.println("JSON written to: " + filename);
+            Map<String, Object> config = new HashMap<>();
+            config.put(JsonGenerator.PRETTY_PRINTING, true);
+
+            JsonWriterFactory writerFactory = Json.createWriterFactory(config);
+            JsonWriter jsonWriter = writerFactory.createWriter(fos);
+
+            jsonWriter.write(recordsToJson(records));
+            jsonWriter.close();
+
         } catch (IOException e) {
-            System.out.println("IO ERROR, save failed");
+            System.err.println("Error writing to file: " + e.getMessage());
         }
     }
 
