@@ -1,7 +1,6 @@
 package Database;
 
 import javax.json.*;
-import javax.json.stream.JsonGenerator;
 import java.util.*;
 import java.io.*;
 
@@ -93,22 +92,14 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
     }
 
     public void saveToFile() {
-        try (FileOutputStream fos = new FileOutputStream(filename)) {
+        try (FileOutputStream fos = new FileOutputStream(filename);
+             JsonWriter writer = Json.createWriter(fos)) {
+            JsonObject jsonObject = recordsToJson(records);
 
-            // Create pretty-printing configuration
-            Map<String, Object> config = new HashMap<>();
-            config.put(JsonGenerator.PRETTY_PRINTING, true);
-
-            JsonWriterFactory writerFactory = Json.createWriterFactory(config);
-
-            JsonWriter jsonWriter = writerFactory.createWriter(fos);
-
-            jsonWriter.write(recordsToJson(records));
-
-            jsonWriter.close();
-
+            writer.writeObject(jsonObject);
+            System.out.println("JSON written to: " + filename);
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            System.out.println("IO ERROR, save failed");
         }
     }
 
@@ -124,16 +115,5 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
 
     public int numberOfRecords() {
         return records.size();
-    }
-
-    public void updateRecord(String key, Obj new_record) {
-        for (int i = 0; i < records.size(); i++) {
-            if (new_record != null && key.equals(records.get(i).getSearchKey())) {
-                records.set(i, new_record);
-                saveToFile();
-                return;
-            }
-        }
-        System.out.println("RECORD (TO BE UPDATED) NOT FOUND!");
     }
 }

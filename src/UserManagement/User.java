@@ -2,19 +2,20 @@ package UserManagement;
 
 import Database.DataInfo;
 import Utilities.Validation;
+import Database.JsonDatabaseManager;
 
 public abstract class User implements DataInfo {
     private String name;
     private String ID;
     private String email;
-    private String passwordHash;
+    private String password;
     protected String role;
 
     public User(String name, String ID, String email, String password) {
         setName(name);
         setID(ID);
         setEmail(email);
-        setPasswordHash(password);
+        setPassword(password);
     }
 
     public void setName(String name) {
@@ -53,16 +54,16 @@ public abstract class User implements DataInfo {
         this.email = email;
     }
 
-    public void setPasswordHash(String passwordHash){
-        if(!Validation.isValidString(passwordHash)){
+    public void setPassword(String password){
+        if(!Validation.isValidString(password)){
             throw new IllegalArgumentException("Invalid password format.");
         }
 
-        this.passwordHash = passwordHash;
+        this.password = password;
     }
 
-    public String getPasswordHash(){
-        return this.passwordHash;
+    public String getPassword(){
+        return this.password;
     }
 
     public String getRole(){
