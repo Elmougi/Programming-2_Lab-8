@@ -1,6 +1,6 @@
-package Utilities;
+package GUI;
 
-import java.security.MessageDigest;
+import java.security.*;
 
 public class Hashing {
     public static String hashPassword(String password) {
