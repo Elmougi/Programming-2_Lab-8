@@ -1,4 +1,4 @@
-package utilities;
+package Utilities;
 
 public class Validation {
     public static boolean isValidString(String str) {

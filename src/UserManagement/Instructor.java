@@ -1,4 +1,4 @@
-package Users;
+package UserManagement;
 
 public class Instructor extends User {
     public Instructor(String name, String ID, String email, String password){
