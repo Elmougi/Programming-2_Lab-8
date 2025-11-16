@@ -2,6 +2,7 @@ package GUI;
 
 import UserManagement.User;
 import Database.UserService;
+import Utilities.Hashing;
 
 
 import javax.swing.*;
@@ -105,7 +106,7 @@ public class login extends JFrame {
 
             if (matchesEmail || matchesId) {
 
-                if (user.getPassword().equals(hashedInput)) {
+                if (user.getPasswordHash().equals(hashedInput)) {
                     return user; // SUCCESS
                 } else {
                     return null; // WRONG PASSWORD

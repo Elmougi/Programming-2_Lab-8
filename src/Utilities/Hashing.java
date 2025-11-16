@@ -1,12 +1,8 @@
-<<<<<<<< HEAD:src/GUI/Hashing.java
-package GUI;
-
-import java.security.*;
-========
 package Utilities;
 
+import java.security.*;
 import java.security.MessageDigest;
->>>>>>>> 0366643 (added instructor's functionality):src/Utilities/Hashing.java
+
 
 public class Hashing {
     public static String hashPassword(String password) {
