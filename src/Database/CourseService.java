@@ -115,7 +115,5 @@ public class CourseService extends JsonDatabaseManager<Course> {
         }
         return builder.build();
     }
-
-    // remember to add update course
 }
 
