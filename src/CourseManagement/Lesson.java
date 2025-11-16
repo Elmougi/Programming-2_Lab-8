@@ -72,7 +72,7 @@ public class Lesson implements DataInfo {
     }
 
     public List<String> getResources() {
-        return Collections.unmodifiableList(resources);
+        return resources;
     }
 
     public boolean searchResource(String resource) {

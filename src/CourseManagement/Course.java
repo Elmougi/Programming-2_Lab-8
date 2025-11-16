@@ -87,13 +87,16 @@ public class Course implements DataInfo {
     public String getInstructorId() { return instructorId; }
 
     public List<Lesson> getLessons() {
-        return Collections.unmodifiableList(lessons);
+//        return Collections.unmodifiableList(lessons);
         // I found out that ,clone() will not copy inside elements
         // so after doing research, you can actually send a List in an immutable form
+
+//        Actually, I need to edit lessons for easiness
+        return lessons;
     }
 
     public List<Student> getStudents() {
-        return Collections.unmodifiableList(students);
+        return students;
     }
 
     public Student searchStudent(String key){
@@ -124,5 +127,22 @@ public class Course implements DataInfo {
             return;
         }
         lessons.remove(searchLesson(key));
+    }
+
+    public void editLesson(String key, Lesson new_lesson){
+        Lesson lesson = searchLesson(key);
+        if(lesson == null) {
+            return;
+        }
+
+        if(Validation.isValidString(new_lesson.getSearchKey())) lesson.setLessonID(new_lesson.getSearchKey());
+        if(Validation.isValidString(new_lesson.getTitle())) lesson.setTitle(new_lesson.getTitle());
+        if(Validation.isValidString(new_lesson.getContent())) lesson.setContent(new_lesson.getContent());
+        if(new_lesson.getResources() != null){
+            lesson.getResources().clear();
+            for(String resource : new_lesson.getResources()){
+                lesson.addResource(resource);
+            }
+        }
     }
 }

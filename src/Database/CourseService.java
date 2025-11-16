@@ -40,7 +40,7 @@ public class CourseService extends JsonDatabaseManager<Course> {
                     .build());
         }
 
-        return Json.createObjectBuilder().add("courses", arrayBuilder.build() ).build();
+        return Json.createObjectBuilder().add("courses", arrayBuilder.build()).build();
     }
 
 
@@ -115,7 +115,5 @@ public class CourseService extends JsonDatabaseManager<Course> {
         }
         return builder.build();
     }
-
-    // remember to add update course
 }
 

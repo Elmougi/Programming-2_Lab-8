@@ -116,4 +116,15 @@ public abstract class JsonDatabaseManager<Obj extends DataInfo> {
     public int numberOfRecords() {
         return records.size();
     }
+
+    public void updateRecord(String key, Obj new_record) {
+        for (int i = 0; i < records.size(); i++) {
+            if (new_record != null && key.equals(records.get(i).getSearchKey())) {
+                records.set(i, new_record);
+                saveToFile();
+                return;
+            }
+        }
+        System.out.println("RECORD (TO BE UPDATED) NOT FOUND!");
+    }
 }

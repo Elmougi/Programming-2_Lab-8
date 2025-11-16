@@ -52,7 +52,7 @@ public class UserService extends JsonDatabaseManager<User> {
                     .add("id", user.getSearchKey())
                     .add("name", user.getName())
                     .add("email", user.getEmail())
-                    .add("password", user.getPassword())
+                    .add("password", user.getPasswordHash())
                     .add("role", user.getRole())
                     .build());
         }
@@ -61,6 +61,4 @@ public class UserService extends JsonDatabaseManager<User> {
                 .add("users", arrayBuilder.build())
                 .build();
     }
-
-    // remeber to add: update student
 }
