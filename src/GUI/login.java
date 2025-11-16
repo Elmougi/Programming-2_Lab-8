@@ -23,7 +23,6 @@ public class login extends JFrame {
     private JComboBox roleBox;
     private JLabel roleLabel;
 
-    // IMPORTANT: login needs UserService to access JSON
     private UserService userService = new UserService();
 
     public login() {
@@ -43,6 +42,15 @@ public class login extends JFrame {
                 processInput();
             }
         });
+
+        signButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                new signUp();
+                dispose();
+            }
+        });
     }
 
 
@@ -57,7 +65,6 @@ public class login extends JFrame {
             return;
         }
 
-
         User loggedUser = checkCredentials(input, password);
 
         if (loggedUser == null) {
@@ -71,8 +78,8 @@ public class login extends JFrame {
             return;
         }
 
-        JOptionPane.showMessageDialog(LoginContainer,
-                "Login successful. Welcome " + loggedUser.getName());
+        //JOptionPane.showMessageDialog(LoginContainer,
+          //      "Login successful. Welcome " + loggedUser.getName());
 
 
         if (loggedUser.getRole().equalsIgnoreCase("Student")) {
@@ -85,10 +92,7 @@ public class login extends JFrame {
     }
 
 
-
-
     public User checkCredentials(String emailOrId, String plainPassword) {
-
 
         ArrayList<User> allUsers = userService.returnAllRecords();
 
@@ -108,8 +112,10 @@ public class login extends JFrame {
                 }
             }
         }
-
         return null; // USER NOT FOUND
     }
+
+
+
 
 }
