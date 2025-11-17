@@ -5,7 +5,6 @@ import CourseManagement.Lesson;
 import Database.CourseService;
 import Database.UserService;
 import UserManagement.Student;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -63,11 +62,10 @@ public class stdMainWindow extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(mainPanel);
 
-
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                userService.updateRecord(currentStudent.getSearchKey(), currentStudent);
+                saveAllData();
             }
         });
 
@@ -80,12 +78,10 @@ public class stdMainWindow extends JFrame {
         availableCoursesModel.clear();
         enrolledCoursesModel.clear();
 
-
         List<Course> enrolledCourses = currentStudent.getEnrolledCourses(courseService);
 
         for (Course course : allCourses) {
             String courseDisplay = course.getTitle() + " (ID: " + course.getSearchKey() + ")";
-
 
             boolean isEnrolled = false;
             for (Course enrolledCourse : enrolledCourses) {
@@ -198,21 +194,24 @@ public class stdMainWindow extends JFrame {
             return;
         }
 
-
         new CourseDetailsWindow(course, currentStudent, courseService, userService);
     }
 
     private void onLogout() {
         int choice = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to logout?",
+                "Are you sure you want to logout?\nAll changes will be saved.",
                 "Confirm Logout",
-                JOptionPane.YES_NO_OPTION);
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
         if (choice == JOptionPane.YES_OPTION) {
 
-            userService.updateRecord(currentStudent.getSearchKey(), currentStudent);
+            saveAllData();
+
 
             dispose();
+
+
             new login();
         }
     }
@@ -279,6 +278,17 @@ public class stdMainWindow extends JFrame {
         int startIndex = courseDisplay.indexOf("ID: ") + 4;
         int endIndex = courseDisplay.indexOf(")", startIndex);
         return courseDisplay.substring(startIndex, endIndex);
+    }
+
+    private void saveAllData() {
+
+        userService.updateRecord(currentStudent.getSearchKey(), currentStudent);
+
+
+        courseService.saveToFile();
+
+
+        userService.saveToFile();
     }
 
     public JPanel getMainPanel() {

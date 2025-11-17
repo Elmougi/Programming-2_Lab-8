@@ -7,6 +7,7 @@ import Utilities.Validation;
 import Database.CourseService;
 import Database.UserService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,10 +62,41 @@ public class Instructor extends User {
         courseService.updateRecord(key, existingCourse);
     }
 
-    public List<Student> enrolledStudents(CourseService courseService, String courseId){
-        Course existingCourse = courseService.getRecord(courseId);
-        List<Student> students = existingCourse.getStudents();
 
-        return Collections.unmodifiableList(students);
+
+    public List<Student> enrolledStudents(CourseService courseService, UserService userService, String courseId){
+        Course existingCourse = courseService.getRecord(courseId);
+
+        if (existingCourse == null) {
+            return Collections.emptyList();
+        }
+
+
+        List<Student> enrolledStudents = new ArrayList<>();
+        List<User> allUsers = userService.returnAllRecords();
+
+        for (User user : allUsers) {
+            if (user instanceof Student) {
+                Student student = (Student) user;
+
+                if (student.getProgress().containsKey(courseId)) {
+                    enrolledStudents.add(student);
+                }
+            }
+        }
+
+
+        existingCourse.getStudents().clear();
+
+
+        for (Student student : enrolledStudents) {
+            existingCourse.addStudent(student);
+        }
+
+
+        courseService.updateRecord(courseId, existingCourse);
+
+        return Collections.unmodifiableList(enrolledStudents);
     }
 }
+

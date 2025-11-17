@@ -19,13 +19,6 @@ public class Main {
             if (userService.numberOfRecords() == 0) {
                 System.out.println("No users found. Creating sample accounts...\n");
 
-                Student student1 = new Student("Ahmed Mohamed", "S001", "ahmed@student.com", "pass123");
-                Student student2 = new Student("Sara Ali", "S002", "sara@student.com", "pass456");
-                Instructor instructor1 = new Instructor("Dr. Hassan", "I001", "hassan@instructor.com", "teach123");
-
-                userService.insertRecord(student1);
-                userService.insertRecord(student2);
-                userService.insertRecord(instructor1);
 
 
             } else {
