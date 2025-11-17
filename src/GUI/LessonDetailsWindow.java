@@ -60,7 +60,7 @@ public class LessonDetailsWindow extends JDialog {
 
 
         contentArea.setText(lesson.getContent());
-        contentArea.setCaretPosition(0); // Scroll to top
+        contentArea.setCaretPosition(0);
 
 
         resourcesModel = new DefaultListModel<>();
@@ -92,7 +92,5 @@ public class LessonDetailsWindow extends JDialog {
         });
     }
 
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
+
 }

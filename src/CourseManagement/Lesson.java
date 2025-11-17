@@ -59,9 +59,6 @@ public class Lesson implements DataInfo {
         this.resources.add(resource);
     }
 
-//    public String getLessonID() {
-//        return lessonID;
-//    }
 
     public String getTitle() {
         return title;
@@ -75,13 +72,13 @@ public class Lesson implements DataInfo {
         return resources;
     }
 
-    public boolean searchResource(String resource) {
+   /* public boolean searchResource(String resource) {
         for(String current : resources){
             if (resource != null && resource.equals(current))
                 return true;
         }
         return false;
-    }
+    }for later use lab8 inshallah*/
 
     public void removeResource(String resource) {
         if(!resources.contains(resource)) {
@@ -89,6 +86,5 @@ public class Lesson implements DataInfo {
         }
         resources.remove(resource);
     }
-
 
 }

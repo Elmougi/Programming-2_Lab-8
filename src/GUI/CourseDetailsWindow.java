@@ -149,10 +149,10 @@ public class CourseDetailsWindow extends JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             try {
-                // Use Student's method to mark lesson as completed
+
                 student.markLessonCompleted(course.getSearchKey(), lesson.getSearchKey());
 
-                // Update user in database to persist progress
+
                 userService.updateRecord(student.getSearchKey(), student);
 
                 JOptionPane.showMessageDialog(this,
@@ -174,7 +174,5 @@ public class CourseDetailsWindow extends JFrame {
         updateProgressLabel();
     }
 
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
+
 }
