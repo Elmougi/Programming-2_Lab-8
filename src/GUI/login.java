@@ -7,93 +7,92 @@ import Database.UserService;
 import Utilities.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.*;
 
 public class login extends JFrame {
-
-    private JPanel LoginContainer;
-    private JPasswordField passwordField;
-    private JLabel PasswordLabel;
-    private JLabel UsernameLabel;
+    private JPanel mainPanel;
+    private JPanel loginCard;
+    private JLabel titleLabel;
+    private JLabel subtitleLabel;
+    private JLabel usernameLabel;
     private JTextField usernameField;
-    private JLabel Title;
-    private JButton submit;
-    private JButton signButton;
-    private JLabel signLabel;
-    private JComboBox roleBox;
+    private JLabel passwordLabel;
+    private JPasswordField passwordField;
     private JLabel roleLabel;
+    private JComboBox<String> roleBox;
+    private JButton loginButton;
+    private JLabel signupLabel;
+    private JButton signupButton;
 
     private UserService userService = new UserService();
 
     public login() {
-
-        setVisible(true);
-        setSize(400,400);
-        setContentPane(LoginContainer);
-        setTitle("Login");
+        setTitle("SkillForge - Login");
+        setSize(600, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setContentPane(mainPanel);
+
+
+        loginCard.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
+                BorderFactory.createEmptyBorder(40, 60, 40, 60)
+        ));
+
 
         roleBox.addItem("Student");
         roleBox.addItem("Instructor");
 
-        submit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                processInput();
-            }
+
+        loginButton.addActionListener(e -> processLogin());
+        signupButton.addActionListener(e -> {
+            new signUp();
+            dispose();
         });
 
-        signButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                new signUp();
-                dispose();
-            }
-        });
+        usernameField.addActionListener(e -> passwordField.requestFocus());
+        passwordField.addActionListener(e -> processLogin());
+
+        setVisible(true);
     }
 
-
-    private void processInput() {
-
-        String input = usernameField.getText();
+    private void processLogin() {
+        String input = usernameField.getText().trim();
         if (!Validation.isValidString(input)) {
-            JOptionPane.showMessageDialog(LoginContainer, "Email or ID cannot be empty.");
-            passwordField.setText("");
+            showError("Email or ID cannot be empty.");
             return;
         }
 
         String password = new String(passwordField.getPassword());
         if (!Validation.isValidString(password)) {
-            JOptionPane.showMessageDialog(LoginContainer, "Password cannot be empty.");
+            showError("Password cannot be empty.");
             passwordField.setText("");
             return;
         }
 
-        String selectedRole = roleBox.getSelectedItem().toString();
+        String selectedRole = (String) roleBox.getSelectedItem();
         if (!Validation.isValidString(selectedRole)) {
-            JOptionPane.showMessageDialog(LoginContainer, "Please select a role.");
-            passwordField.setText("");
+            showError("Please select a role.");
             return;
         }
 
         User loggedUser = checkCredentials(input, password);
         if (loggedUser == null) {
-            JOptionPane.showMessageDialog(LoginContainer, "Invalid email/ID or password.");
+            showError("Invalid email/ID or password.");
             passwordField.setText("");
             return;
         }
 
         if (!loggedUser.getRole().equalsIgnoreCase(selectedRole)) {
-            JOptionPane.showMessageDialog(LoginContainer, "Incorrect role selected.");
+            showError("Incorrect role selected. This account is registered as a " + loggedUser.getRole() + ".");
             passwordField.setText("");
             return;
         }
 
+
         if (loggedUser.getRole().equalsIgnoreCase("Student")) {
-            new stdMainWindow( (Student) loggedUser);
+            new stdMainWindow((Student) loggedUser);
         } else {
             new insMainWindow((Instructor) loggedUser);
         }
@@ -101,27 +100,16 @@ public class login extends JFrame {
         dispose();
     }
 
-
     public User checkCredentials(String emailOrId, String plainPassword) {
-
-        ArrayList<User> allUsers = userService.returnAllRecords();
-
+        java.util.ArrayList<User> allUsers = userService.returnAllRecords();
         String hashedInput = Hashing.hashPassword(plainPassword);
 
-
         for (User user : allUsers) {
-//            System.out.println("enterd");
-
             boolean matchesEmail = user.getEmail().equalsIgnoreCase(emailOrId);
             boolean matchesId = user.getSearchKey().equalsIgnoreCase(emailOrId);
 
             if (matchesEmail || matchesId) {
-//                System.out.println("enterd");
-                System.out.println(plainPassword);
-                System.out.println(hashedInput);
-                System.out.println(user.getPasswordHash());
                 if (hashedInput.equals(user.getPasswordHash())) {
-//                    System.out.println("here?!");
                     return user;
                 } else {
                     return null;
@@ -131,4 +119,10 @@ public class login extends JFrame {
         return null;
     }
 
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this,
+                message,
+                "Login Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }

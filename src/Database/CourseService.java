@@ -30,7 +30,7 @@ public class CourseService extends JsonDatabaseManager<Course> {
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // main object with many courses - elements
 
         for (Course course : courses) {
-            // Build course object
+
             arrayBuilder.add(Json.createObjectBuilder()
                     .add("courseId", course.getSearchKey())
                     .add("title", course.getTitle())
