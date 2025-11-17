@@ -42,7 +42,7 @@ public class Student extends User{
         Course course = courseService.getRecord(CourseID);
         if (course != null) {
 
-            UpdateLesson(course, CourseID);
+            UpdateCourse(course, CourseID);
             return Collections.unmodifiableList(course.getLessons());
         } else {
             throw new IllegalArgumentException("Invalid Course ID");
@@ -86,8 +86,8 @@ public class Student extends User{
             Map<String, Boolean> lessonProgress = progress.get(courseID);
             Course course = courseService.getRecord(courseID);
             if (course != null) {
-                // Sync progress before getting completed lessons
-                UpdateLesson(course, courseID);
+
+                UpdateCourse(course, courseID);
                 for (Lesson lesson : course.getLessons()) {
                     if (lessonProgress.getOrDefault(lesson.getSearchKey(), false)) {
                         completedLessons.add(lesson);
@@ -114,7 +114,7 @@ public class Student extends User{
     }
 
 
-    private void UpdateLesson(Course course, String courseID) {
+    private void UpdateCourse(Course course, String courseID) {
         if (!progress.containsKey(courseID)) {
             return;
         }
@@ -125,6 +125,7 @@ public class Student extends User{
 
         for (Lesson lesson : course.getLessons()) {
             String lessonID = lesson.getSearchKey();
+
             newProgress.put(lessonID, lessonProgress.getOrDefault(lessonID, false));
         }
 
@@ -133,7 +134,7 @@ public class Student extends User{
     }
 
 
-    public void updateLessonIdInProgress(String courseID, String oldLessonID, String newLessonID) {
+    public void updateLessonId(String courseID, String oldLessonID, String newLessonID) {
         if (progress.containsKey(courseID)) {
             Map<String, Boolean> lessonProgress = progress.get(courseID);
             if (lessonProgress.containsKey(oldLessonID)) {
@@ -142,6 +143,16 @@ public class Student extends User{
                 lessonProgress.remove(oldLessonID);
                 lessonProgress.put(newLessonID, completionStatus);
             }
+        }
+    }
+
+
+    public void updateCourseId(String oldCourseID, String newCourseID) {
+        if (progress.containsKey(oldCourseID)) {
+
+            Map<String, Boolean> lessonProgress = progress.get(oldCourseID);
+            progress.remove(oldCourseID);
+            progress.put(newCourseID, lessonProgress);
         }
     }
 

@@ -137,15 +137,26 @@ public class insMainWindow extends JFrame {
             DescriptionEdited.setText(course.getDescription());
         });
 
+
         editButtonCourse.addActionListener(e -> {
             String oldId = CourseIDField.getText();
+            String newId = CourseIDEdited.getText().trim();
             String title = titleCourseEdited.getText();
             String description = DescriptionEdited.getText();
 
             try {
-                currentInstructor.editCourseDetails(courseService, oldId, title, description);
-                JOptionPane.showMessageDialog(this, "Course updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                CourseIDField.setText("");
+
+                currentInstructor.editCourseDetails(courseService, userService, oldId, newId, title, description);
+
+
+                if (!oldId.equals(newId)) {
+                    CourseIDField.setText(newId);
+                    JOptionPane.showMessageDialog(this, "Course updated successfully!\nCourse ID changed from '" + oldId + "' to '" + newId + "'.\nAll enrolled students' progress has been updated.",
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Course updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
                 CourseIDEdited.setText("");
                 titleCourseEdited.setText("");
                 DescriptionEdited.setText("");
