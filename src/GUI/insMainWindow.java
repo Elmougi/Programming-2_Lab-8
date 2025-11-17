@@ -1,17 +1,17 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import CourseManagement.*;
 import java.util.*;
 import Database.*;
-import com.sun.jdi.PathSearchingVirtualMachine;
+import UserManagement.*;
 
 public class insMainWindow extends JFrame {
     private JPanel MainPanel;
     private JTabbedPane mainTaps;
     private JTabbedPane courseTabs;
 
-    private JTextField IDCouresField;
     private JTextField ContentField;
     private JTextField titleLessonfield;
 
@@ -54,183 +54,288 @@ public class insMainWindow extends JFrame {
     private JComboBox ResourcesComboBox;
     private JButton deleteResouces;
 
-    public insMainWindow() {
-        setTitle("Instructor Dashboard");
+    private Instructor currentInstructor;
+    private CourseService courseService;
+    private UserService userService;
+
+    public insMainWindow(Instructor instructor) {
+        this.currentInstructor = instructor;
+        this.courseService = new CourseService();
+        this.userService = new UserService();
+
+        setTitle("Instructor Dashboard - " + instructor.getName());
         setContentPane(MainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-
+        setSize(800, 600);
         setLocationRelativeTo(null);
+
+        setListeners();
+        viewAllCourses();
+
         setVisible(true);
     }
 
-    public void setListners() {
-        //Create course
+    private void setListeners() {
+
         createButton.addActionListener(e -> {
             try {
                 String courseId = CreateCourseID.getText();
                 String title = createCourseTitle.getText();
                 String description = CreateCourseD.getText();
-                String instructorId = "INS001"; // replace with actual logged instructor ID
 
-                Course newCourse = new Course(
-                        courseId,
-                        title,
-                        description,
-                        instructorId,
-                        new ArrayList<>()
-                );
+                currentInstructor.createCourse(courseService, courseId, title, description, new ArrayList<>());
 
-                CourseService cs = new CourseService();
-                cs.insertRecord(newCourse);
-                JOptionPane.showMessageDialog(this, "Course created!");
-
+                JOptionPane.showMessageDialog(this, "Course created successfully!");
+                CreateCourseID.setText("");
+                createCourseTitle.setText("");
+                CreateCourseD.setText("");
+                viewAllCourses();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
         });
 
-        // EDIT COURSE
+
         searchButtonC.addActionListener(e -> {
             String id = CourseIDField.getText();
-            CourseService cs = new CourseService();
+            Course course = courseService.getRecord(id);
 
-            Course course = cs.getRecord(id);
             if (course == null) {
                 JOptionPane.showMessageDialog(this, "Course not found!");
+                return;
+            }
+
+            if (!course.getInstructorId().equals(currentInstructor.getSearchKey())) {
+                JOptionPane.showMessageDialog(this, "You can only edit your own courses!");
                 return;
             }
 
             CourseIDEdited.setText(course.getSearchKey());
             titleCourseEdited.setText(course.getTitle());
             DescriptionEdited.setText(course.getDescription());
-
-            editButtonCourse.addActionListener(e1 -> {
-                course.setTitle(titleCourseEdited.getText());
-                course.setDescription(DescriptionEdited.getText());
-                course.setCourseId(CourseIDEdited.getText());
-                cs.updateRecord(course.getSearchKey(), course);
-                JOptionPane.showMessageDialog(this, "Course updated!");
-
-            });
         });
 
-        // DELETE COURSE
+
+        editButtonCourse.addActionListener(e -> {
+            String oldId = CourseIDField.getText();
+            String newId = CourseIDEdited.getText();
+            String title = titleCourseEdited.getText();
+            String description = DescriptionEdited.getText();
+
+            try {
+                currentInstructor.editCourseDetails(courseService, oldId, title, description);
+                JOptionPane.showMessageDialog(this, "Course updated successfully!");
+                CourseIDField.setText("");
+                CourseIDEdited.setText("");
+                titleCourseEdited.setText("");
+                DescriptionEdited.setText("");
+                viewAllCourses();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+        });
+
+
         DeleteButtonC.addActionListener(e -> {
             String id = DeletedCourseID.getText();
-            CourseService cs = new CourseService();
-            Course course = cs.getRecord(id);
+            Course course = courseService.getRecord(id);
+
             if (course == null) {
                 JOptionPane.showMessageDialog(this, "Course not found!");
                 return;
             }
-            cs.deleteRecord(id);
-            JOptionPane.showMessageDialog(this, "Course deleted!");
 
+            if (!course.getInstructorId().equals(currentInstructor.getSearchKey())) {
+                JOptionPane.showMessageDialog(this, "You can only delete your own courses!");
+                return;
+            }
 
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete this course?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                currentInstructor.deleteCourse(courseService, id);
+                JOptionPane.showMessageDialog(this, "Course deleted successfully!");
+                DeletedCourseID.setText("");
+                viewAllCourses();
+            }
         });
 
-        // ADD LESSON
+
         addButtonLesson.addActionListener(e -> {
-            String id = CourseID_AddLesson.getText();
-            String LessonID = AddLessonID.getText();
+            String courseId = CourseID_AddLesson.getText();
+            String lessonId = AddLessonID.getText();
             String title = titleLessonfield.getText();
             String content = ContentField.getText();
-            CourseService cs = new CourseService();
-            Course course = cs.getRecord(id);
-            if (course == null) {
-                JOptionPane.showMessageDialog(this, "Course not found!");
-                return;
-            } else if (course.getLessons().contains(getLesson(course, LessonID))) {
-                JOptionPane.showMessageDialog(this, "Lesson Already found!");
-                return;
+
+            try {
+                currentInstructor.addLesson(courseService, courseId, lessonId, title, content, new ArrayList<>());
+                JOptionPane.showMessageDialog(this, "Lesson added successfully!");
+                CourseID_AddLesson.setText("");
+                AddLessonID.setText("");
+                titleLessonfield.setText("");
+                ContentField.setText("");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
             }
-            Lesson lesson = new Lesson(LessonID, title, content, new ArrayList<>());
-            course.getLessons().add(lesson);
-
-            cs.updateRecord(id, course);
-            JOptionPane.showMessageDialog(this, "Lesson added Successfully!");
-
-
         });
-        //Edit Lesson
+
+
         searchButtonL.addActionListener(e -> {
-            String id = CourseLessonEdit.getText();
-            String lessonID = LessonIDSe.getText();
-            CourseService cs = new CourseService();
-            Course course = cs.getRecord(id);
+            String courseId = CourseLessonEdit.getText();
+            String lessonId = LessonIDSe.getText();
+
+            Course course = courseService.getRecord(courseId);
             if (course == null) {
                 JOptionPane.showMessageDialog(this, "Course not found!");
                 return;
-            } else if (!course.getLessons().contains(getLesson(course, lessonID))) {
-                JOptionPane.showMessageDialog(this, "Lesson not found in Course!");
+            }
+
+            Lesson lesson = course.searchLesson(lessonId);
+            if (lesson == null) {
+                JOptionPane.showMessageDialog(this, "Lesson not found in course!");
                 return;
             }
-            Lesson l=getLesson(course, lessonID);
-            IDLessonEdited.setText((l.getSearchKey());
-            titleLessonEdited.setText(l.getTitle());
-            ContentEdited.setText(l.getContent());
 
-            List <String> items = l.getResources();
-            for (String s : items) {
-                ResourcesComboBox.addItem(s);
+            IDLessonEdited.setText(lesson.getSearchKey());
+            titleLessonEdited.setText(lesson.getTitle());
+            ContentEdited.setText(lesson.getContent());
+
+            ResourcesComboBox.removeAllItems();
+            for (String resource : lesson.getResources()) {
+                ResourcesComboBox.addItem(resource);
             }
-            EditButtonL.addActionListener(e1 -> {
-                l.setLessonID(IDLessonEdited.getText());
-                l.setTitle(titleLessonEdited.getText());
-                l.setContent(ContentEdited.getText());
-                JOptionPane.showMessageDialog(this, "Lesson updated Successfully!");
-
-            });
-            //Edit Resources
-            addResources.addActionListener(e1 -> {
-                l.addResource(ResourcesField.getText());
-                ResourcesField.setText("");
-            });
-            deleteResouces.addActionListener(e1 -> {
-                items = l.getResources();
-                for (String s : items) {
-                    ResourcesComboBox.addItem(s);
-                }
-                l.removeResource(ResourcesComboBox.getSelectedItem().toString());
-                JOptionPane.showMessageDialog(this, "Resource removed successfully!");
-
-            });
-
         });
-        // Delete Lesson
-        deleteButton.addActionListener(e -> {
-            String id = CourseID_lessonDelete.getText();
-            String lessonID = LessonID_Delete.getText();
-            CourseService cs = new CourseService();
-            Course course = cs.getRecord(id);
+
+
+        EditButtonL.addActionListener(e -> {
+            String courseId = CourseLessonEdit.getText();
+            String oldLessonId = LessonIDSe.getText();
+            String newLessonId = IDLessonEdited.getText();
+            String title = titleLessonEdited.getText();
+            String content = ContentEdited.getText();
+
+            Course course = courseService.getRecord(courseId);
             if (course == null) {
                 JOptionPane.showMessageDialog(this, "Course not found!");
                 return;
-            } else if (!course.getLessons().contains(lessonID)) {
-                JOptionPane.showMessageDialog(this, "Lesson not found in Course!");
+            }
+
+            Lesson lesson = course.searchLesson(oldLessonId);
+            if (lesson == null) {
+                JOptionPane.showMessageDialog(this, "Lesson not found!");
                 return;
             }
-            for (Lesson lesson : course.getLessons()) {
-                if (lesson.getSearchKey().equals(LessonID_Delete.getText())) {
-                    course.getLessons().remove(lesson);
-                    cs.updateRecord(id, course);
-                    JOptionPane.showMessageDialog(this, "Lesson deleted Successfully!");
-                    break;
+
+            try {
+                currentInstructor.editLesson(courseService, courseId, oldLessonId, title, content, lesson.getResources());
+                JOptionPane.showMessageDialog(this, "Lesson updated successfully!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+        });
+
+
+        addResources.addActionListener(e -> {
+            String courseId = CourseLessonEdit.getText();
+            String lessonId = LessonIDSe.getText();
+            String resource = ResourcesField.getText();
+
+            Course course = courseService.getRecord(courseId);
+            if (course == null) {
+                JOptionPane.showMessageDialog(this, "Course not found!");
+                return;
+            }
+
+            Lesson lesson = course.searchLesson(lessonId);
+            if (lesson == null) {
+                JOptionPane.showMessageDialog(this, "Lesson not found!");
+                return;
+            }
+
+            lesson.addResource(resource);
+            courseService.updateRecord(courseId, course);
+            ResourcesComboBox.addItem(resource);
+            ResourcesField.setText("");
+            JOptionPane.showMessageDialog(this, "Resource added successfully!");
+        });
+
+
+        deleteResouces.addActionListener(e -> {
+            String courseId = CourseLessonEdit.getText();
+            String lessonId = LessonIDSe.getText();
+            Object selectedResource = ResourcesComboBox.getSelectedItem();
+
+            if (selectedResource == null) {
+                JOptionPane.showMessageDialog(this, "Please select a resource to delete!");
+                return;
+            }
+
+            Course course = courseService.getRecord(courseId);
+            if (course == null) {
+                JOptionPane.showMessageDialog(this, "Course not found!");
+                return;
+            }
+
+            Lesson lesson = course.searchLesson(lessonId);
+            if (lesson == null) {
+                JOptionPane.showMessageDialog(this, "Lesson not found!");
+                return;
+            }
+
+            lesson.removeResource(selectedResource.toString());
+            courseService.updateRecord(courseId, course);
+            ResourcesComboBox.removeItem(selectedResource);
+            JOptionPane.showMessageDialog(this, "Resource removed successfully!");
+        });
+
+
+        deleteButton.addActionListener(e -> {
+            String courseId = CourseID_lessonDelete.getText();
+            String lessonId = LessonID_Delete.getText();
+
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete this lesson?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    currentInstructor.deleteLesson(courseService, courseId, lessonId);
+                    JOptionPane.showMessageDialog(this, "Lesson deleted successfully!");
+                    CourseID_lessonDelete.setText("");
+                    LessonID_Delete.setText("");
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
                 }
             }
         });
     }
 
-    private Lesson getLesson(Course course, String lessonId) {
-        for (Lesson l : course.getLessons()) {
-            if (l.getSearchKey().equals(lessonId)) {
-                return l;
+    private void viewAllCourses() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Course ID");
+        model.addColumn("Title");
+        model.addColumn("Description");
+        model.addColumn("Instructor ID");
+        model.addColumn("Enrolled Students");
+
+        ArrayList<Course> allCourses = courseService.returnAllRecords();
+        for (Course course : allCourses) {
+            if (course.getInstructorId().equals(currentInstructor.getSearchKey())) {
+                model.addRow(new Object[]{
+                        course.getSearchKey(),
+                        course.getTitle(),
+                        course.getDescription(),
+                        course.getInstructorId(),
+                        course.getStudents().size()
+                });
             }
         }
-        return null;
+
+        table1.setModel(model);
     }
-
 }
-

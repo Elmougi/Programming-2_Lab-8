@@ -51,6 +51,22 @@
                     ]
                 }
             ]
+        },
+        {
+            "courseId": "CCE116",
+            "title": "Programming 1",
+            "description": "Intro to programming using C langugae",
+            "instructorId": "12",
+            "lessons": [
+                {
+                    "lessonID": "1",
+                    "title": "intro",
+                    "content": "intro to c",
+                    "resources": [
+                        "PDF"
+                    ]
+                }
+            ]
         }
     ]
 }

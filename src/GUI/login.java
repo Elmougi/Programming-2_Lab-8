@@ -95,7 +95,7 @@ public class login extends JFrame {
         if (loggedUser.getRole().equalsIgnoreCase("Student")) {
             new stdMainWindow( (Student) loggedUser);
         } else {
-            new insMainWindow();
+            new insMainWindow((Instructor) loggedUser);
         }
 
         dispose();

@@ -2,7 +2,6 @@ import GUI.login;
 import CourseManagement.*;
 import Database.*;
 import UserManagement.*;
-
 import javax.swing.*;
 
 public class Main {

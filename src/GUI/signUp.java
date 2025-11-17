@@ -104,7 +104,7 @@ public class signUp extends JFrame {
             new stdMainWindow((Student) newUser);
         } else {
             newUser = new Instructor(name, String.valueOf(id), email, hashedPassword);
-            new insMainWindow();
+            new insMainWindow((Instructor) newUser);
         }
 
         userService.insertRecord(newUser);
