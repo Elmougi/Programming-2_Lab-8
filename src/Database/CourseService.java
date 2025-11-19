@@ -44,7 +44,8 @@ public class CourseService extends JsonDatabaseManager<Course> {
         return Json.createObjectBuilder().add("courses", arrayBuilder.build()).build();
     }
 
-
+    // --------------------------------------------------------------------------------------------
+    // retrieve peripherals:
 
     private Course retrieveCourse(JsonValue value){
         Course course = null;
@@ -75,8 +76,9 @@ public class CourseService extends JsonDatabaseManager<Course> {
                 String lessonTitle = lessonObj.getString("title");
                 String content = lessonObj.getString("content");
                 List<String> resources = retrieveResources(lessonObj.getJsonArray("resources"));
+                Quiz quiz = retrieveQuiz(lessonObj.getJsonObject("quiz"));
 
-                lessons.add(new Lesson(lessonID, lessonTitle, content, resources));
+                lessons.add(new Lesson(lessonID, lessonTitle, content, resources, quiz));
             }
 
             return lessons;
@@ -95,6 +97,44 @@ public class CourseService extends JsonDatabaseManager<Course> {
         return resources;
     }
 
+    private Quiz retrieveQuiz(JsonObject quizObj) {
+        if (quizObj == null) {
+            return new Quiz();
+        }
+
+        JsonArray questionsArray = quizObj.getJsonArray("questions");
+        List<Question> questions = new ArrayList<>();
+
+        if (questionsArray != null) {
+            for (JsonValue value : questionsArray) {
+                JsonObject questionObj = (JsonObject) value;
+                String questionText = questionObj.getString("questionText");
+                List<String> options = retrieveQuizOptions(questionObj.getJsonArray("options"));
+                int correctAnswerIndex = questionObj.getInt("correctAnswerIndex");
+
+                questions.add(new Question(questionText, options, correctAnswerIndex));
+            }
+        }
+
+        return new Quiz(questions);
+    }
+
+    private List<String> retrieveQuizOptions(JsonArray answersArray) {
+        if (answersArray == null) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> answers = new ArrayList<>();
+        for (JsonValue value : answersArray) {
+            answers.add(((JsonString) value).getString());
+        }
+
+        return answers;
+    }
+
+    // --------------------------------------------------------------------------------------------
+    // build peripherals:
+
     private JsonArray buildLessonsArray(List<Lesson> lessons){
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for (Lesson lesson : lessons) {
@@ -103,6 +143,7 @@ public class CourseService extends JsonDatabaseManager<Course> {
                     .add("title", lesson.getTitle())
                     .add("content", lesson.getContent())
                     .add("resources", buildResourcesArray(lesson.getResources()))
+                    .add("quiz", buildQuiz(lesson.getQuiz()))
                     .build());
         }
         return builder.build();
@@ -113,6 +154,40 @@ public class CourseService extends JsonDatabaseManager<Course> {
         if (resources != null) {
             for (String resource : resources) {
                 builder.add(resource);
+            }
+        }
+        return builder.build();
+    }
+
+    private JsonObject buildQuiz(Quiz quiz) {
+        JsonObjectBuilder quizBuilder = Json.createObjectBuilder();
+        if (quiz != null) {
+            JsonArray questionsArray = buildQuestionsArray(quiz.getQuestions());
+            quizBuilder.add("questions", questionsArray);
+        }
+        return quizBuilder.build();
+    }
+
+    private JsonArray buildQuestionsArray(List<Question> questions) {
+        JsonArrayBuilder questionsArrayBuilder = Json.createArrayBuilder();
+        if(questions != null) {
+            for (Question question : questions) {
+                questionsArrayBuilder.add(Json.createObjectBuilder()
+                        .add("questionText", question.getQuestionText())
+                        .add("options", buildOptionsArray(question.getOptions()))
+                        .add("correctAnswerIndex", question.getAnswerIndex())
+                        .build());
+            }
+        }
+
+        return questionsArrayBuilder.build();
+    }
+
+    private JsonArray buildOptionsArray(List<String> options) {
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        if (options != null) {
+            for (String option : options) {
+                builder.add(option);
             }
         }
         return builder.build();

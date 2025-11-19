@@ -93,6 +93,10 @@ public class Lesson implements DataInfo {
         return false;
     }for later use lab8 inshallah*/
 
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
     public void removeResource(String resource) {
         if(!resources.contains(resource)) {
             return;
