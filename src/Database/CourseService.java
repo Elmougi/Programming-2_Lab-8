@@ -36,6 +36,7 @@ public class CourseService extends JsonDatabaseManager<Course> {
                     .add("title", course.getTitle())
                     .add("description", course.getDescription())
                     .add("instructorId", course.getInstructorId())
+                    .add("status", course.getStatus())
                     .add("lessons", buildLessonsArray(course.getLessons()))
                     .build());
         }
@@ -53,9 +54,10 @@ public class CourseService extends JsonDatabaseManager<Course> {
             String title = courseObj.getString("title");
             String description = courseObj.getString("description", "");
             String instructorId = courseObj.getString("instructorId");
+            String status = courseObj.getString("status");
             List<Lesson> lessons = retrieveLessons(courseObj.getJsonArray("lessons"));
 
-            return new Course(courseId, title, description, instructorId, lessons);
+            return new Course(courseId, title, description, instructorId, lessons, status);
         } else {
             return null;
         }

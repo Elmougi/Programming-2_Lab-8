@@ -15,7 +15,7 @@ public class Course implements DataInfo {
     private List<Student> students;
     private String status; // PENDING, APPROVED, REJECTED
 
-    public Course(String courseId, String title, String description, String instructorId, List<Lesson> lessons) {
+    public Course(String courseId, String title, String description, String instructorId, List<Lesson> lessons, String status) {
         this.lessons = new ArrayList<>();
         students = new ArrayList<>();
         setCourseId(courseId);
@@ -25,10 +25,19 @@ public class Course implements DataInfo {
         if (lessons != null) {
             this.lessons.addAll(lessons);
         }
-        this.status = "PENDING";
+        setStatus(status);
     }
+
+    public Course(String courseId, String title, String description, String instructorId, List<Lesson> lessons) {
+        this(courseId, title, description, instructorId, lessons, "PENDING");
+    }
+
     public Course(String courseId, String title, String instructorId, List<Lesson> lessons) {
         this(courseId, title, "", instructorId, lessons);
+    }
+
+    public Course(String courseId, String title, String instructorId, List<Lesson> lessons, String status) {
+        this(courseId, title, "", instructorId, lessons, status);
     }
 
 
