@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Student extends User{
     private Map<String, Map<String, Boolean>> progress = new HashMap<>();
+    private final List<Certificate> certificates = new ArrayList<>();
 
     public Student(String name, String ID, String email, String password){
         super(name, ID, email, password);
@@ -58,6 +59,10 @@ public class Student extends User{
         }
     }
 
+    public List<Certificate> getCertificates() {
+        return Collections.unmodifiableList(certificates);
+    }
+
     public boolean isLessonCompleted(String courseID, String lessonID) {
         if (progress.containsKey(courseID)) {
             Map<String, Boolean> lessonProgress = progress.get(courseID);
@@ -66,18 +71,35 @@ public class Student extends User{
         return false;
     }
 
-    public void markLessonCompleted(String courseID, String lessonID) {
+    protected void addCertificate(Certificate certificate) {
+        if (certificate != null) {
+            certificates.add(certificate);
+        }
+    }
+
+    public boolean isCourseCompleted(String courseID) {
         if (progress.containsKey(courseID)) {
             Map<String, Boolean> lessonProgress = progress.get(courseID);
-
-            if(!lessonProgress.containsKey(lessonID)) {
-                lessonProgress.put(lessonID, true);
-            } else {
-                lessonProgress.put(lessonID, true);
+            for (Boolean completed : lessonProgress.values()) {
+                if (!completed) {
+                    return false;
+                }
             }
-        } else {
+            return true; // all lessons are done
+        }
+        return false;
+    }
+
+    public void markLessonCompleted(String courseID, String lessonID) {
+        if (!progress.containsKey(courseID)) {
             throw new IllegalArgumentException("Invalid Course ID");
         }
+
+        Map<String, Boolean> lessonProgress = progress.get(courseID);
+        lessonProgress.put(lessonID, true);
+
+        if(isCourseCompleted(courseID)) {
+            addCertificate(new Certificate(this.ID + "_" + this.certificates.size(), courseID, this.ID));    }
     }
 
     public List<Lesson> getCompletedLessons(CourseService courseService, String courseID) {
