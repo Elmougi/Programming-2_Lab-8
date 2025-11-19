@@ -10,18 +10,31 @@ public class Lesson implements DataInfo {
     private String title;
     private String content;
     private List<String> resources;
+    private Quiz quiz;
 
-    public Lesson(String lessonID, String title, String content, List<String> resources) {
+    public Lesson(String lessonID, String title, String content, List<String> resources, Quiz quiz) {
         this.resources = new ArrayList<>();
         setContent(content);
         setLessonID(lessonID);
         setTitle(title);
         if(resources != null)
             this.resources.addAll(resources);
+        else
+            this.resources = new ArrayList<>();
+        if(quiz != null)
+            this.quiz = quiz;
+        else
+            this.quiz = new Quiz();
     }
 
+    public Lesson(String lessonID, String title, String content, List<String> resources){
+        this(lessonID, title, content, resources, new Quiz());
+    }
     public Lesson(String lessonID, String title, String content) {
-        this(lessonID, title, content, null);
+        this(lessonID, title, content, null, new Quiz());
+    }
+    public Lesson(String lessonID, String title, String content, Quiz quiz) {
+        this(lessonID, title, content, null, quiz);
     }
 
     @Override

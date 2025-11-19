@@ -3,8 +3,7 @@ package CourseManagement;
 import Database.DataInfo;
 import java.util.*;
 
-public class Quiz implements DataInfo {
-    private String quizId;
+public class Quiz {
 //    private List<String[]> quizData;
     private List<String> questions;
     private List<List<String>> options;
@@ -14,8 +13,7 @@ public class Quiz implements DataInfo {
     // the questions+options is a map where the options is a list of strings
 
 
-    public Quiz(String quizId) {
-        this.quizId = quizId;
+    public Quiz() {
         this.questions = new ArrayList<>();
         this.options = new ArrayList<>();
         this.answerIndex = -1;
@@ -25,11 +23,6 @@ public class Quiz implements DataInfo {
 //        if (quizData != null) this.quizData = quizData;
 //        else this.quizData = new HashMap<>();
 //    }
-
-    @Override
-    public String getSearchKey() {
-        return quizId;
-    }
 
     public Map<String, List<String>> getQuizData() {
         Map<String, List<String>> res = new HashMap<>();
