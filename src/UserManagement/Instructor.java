@@ -126,6 +126,8 @@ public class Instructor extends User {
         courseService.updateRecord(key, existingCourse);
     }
 
+
+    // needs to be moved to Course
     public List<Student> enrolledStudents(CourseService courseService, UserService userService, String courseId){
         Course existingCourse = courseService.getRecord(courseId);
 
