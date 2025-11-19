@@ -7,7 +7,7 @@ public class Quiz {
 //    private List<String[]> quizData;
     private List<String> questions;
     private List<List<String>> options;
-    private int answerIndex;
+    private List<Integer> answersIndex;
     // private Map<Map<String, List<String>>, Integer> quizData;
     // Map that contains question+options and the answer index in the options
     // the questions+options is a map where the options is a list of strings
@@ -16,7 +16,10 @@ public class Quiz {
     public Quiz() {
         this.questions = new ArrayList<>();
         this.options = new ArrayList<>();
-        this.answerIndex = -1;
+        this.answersIndex = new  ArrayList<>();
+    }
+    public Quiz(List<String> questions, List<List<String>> options, List<Integer> answerIndex) {
+        setQuizData(questions, options, answersIndex);
     }
 //    public Quiz(String quizId, Map<Map<String, List<String>>, Integer> quizData) {
 //        this.quizId = quizId;
@@ -34,14 +37,18 @@ public class Quiz {
         return Collections.unmodifiableMap(res);
     }
 
-    public void setQuizData(List<String> questions, List<List<String>> options, int answer) {
-        if(questions.size() != options.size() || answer < 0 || answer > questions.size()) {
+    public List<String> getQuestions() {
+        return Collections.unmodifiableList(questions);
+    }
+
+    public void setQuizData(List<String> questions, List<List<String>> options, List<Integer> answersIndex) {
+        if(questions.size() != options.size() || answersIndex.size() != questions.size()) {
             throw new IllegalArgumentException("Number of questions and answers must be the same.");
         }
 
         this.questions = questions;
         this.options = options;
-        this.answerIndex = answer;
+        this.answersIndex = answersIndex;
     }
 
     public void addQuizQuestion(String question, List<String> options, int answerIndex) {
@@ -51,7 +58,7 @@ public class Quiz {
 
         this.questions.add(question);
         this.options.add(options);
-        this.answerIndex = answerIndex;
+        this.answersIndex.add(answerIndex);
     }
 
     public boolean isCorrect(int index, int answerIndex) {
@@ -59,7 +66,7 @@ public class Quiz {
             throw new IllegalArgumentException("Question index is out of bounds.");
         }
 
-        return this.answerIndex == answerIndex;
+        return this.answersIndex.get(index) == answerIndex;
     }
 
     public double calculateScore(List<Integer> userAnswers) {
