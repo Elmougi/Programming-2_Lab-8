@@ -4,10 +4,10 @@ import Database.DataInfo;
 import Utilities.Validation;
 
 public abstract class User implements DataInfo {
-    private String name;
-    private String ID;
-    private String email;
-    private String passwordHash;
+    protected String name;
+    protected String ID;
+    protected String email;
+    protected String passwordHash;
     protected String role;
 
     public User(String name, String ID, String email, String password) {
