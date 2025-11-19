@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Student extends User{
     private Map<String, Map<String, Boolean>> progress = new HashMap<>();
-    private final List<Certificate> certificates = new ArrayList<>();
+    private List<Certificate> certificates = new ArrayList<>();
 
     public Student(String name, String ID, String email, String password){
         super(name, ID, email, password);
@@ -71,7 +71,7 @@ public class Student extends User{
         return false;
     }
 
-    protected void addCertificate(Certificate certificate) {
+    public void addCertificate(Certificate certificate) {
         if (certificate != null) {
             certificates.add(certificate);
         }

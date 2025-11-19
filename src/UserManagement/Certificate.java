@@ -14,6 +14,13 @@ public class Certificate {
         this.studentId = studentId;
         this.issueDate = LocalDate.now().toString();
     }
+
+    public Certificate(String certificateId, String courseId, String studentId, String issueDate) {
+        this.certificateId = certificateId;
+        this.courseId = courseId;
+        this.studentId = studentId;
+        this.issueDate = issueDate;
+    }
     // I do not need setters, it will be used internally; hence, no setters nor validation is needed
 
     public String getCertificateId() {
