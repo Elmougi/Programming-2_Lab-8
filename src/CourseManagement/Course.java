@@ -13,6 +13,7 @@ public class Course implements DataInfo {
     private String instructorId;
     private List<Lesson> lessons;
     private List<Student> students;
+    private String status; // PENDING, APPROVED, REJECTED
 
     public Course(String courseId, String title, String description, String instructorId, List<Lesson> lessons) {
         this.lessons = new ArrayList<>();
@@ -24,6 +25,7 @@ public class Course implements DataInfo {
         if (lessons != null) {
             this.lessons.addAll(lessons);
         }
+        this.status = "PENDING";
     }
     public Course(String courseId, String title, String instructorId, List<Lesson> lessons) {
         this(courseId, title, "", instructorId, lessons);
@@ -64,6 +66,16 @@ public class Course implements DataInfo {
         this.instructorId = instructorId;
     }
 
+    public void setStatus(String status) {
+        if(!Validation.isValidString(status)) {
+            throw new IllegalArgumentException("Invalid Status");
+        }
+        if(!status.equals("PENDING") && !status.equals("APPROVED") && !status.equals("REJECTED")) {
+            throw new IllegalArgumentException("Invalid Status");
+        }
+        this.status = status;
+    }
+
     public void addLesson(Lesson lesson) {
         if(lesson == null) {
             return;
@@ -73,7 +85,7 @@ public class Course implements DataInfo {
     }
 
     public void addStudent(Student student) {
-        if(student == null) {
+        if(student == null || !status.equals("APPROVED")) {
             return;
         }
 
@@ -97,6 +109,10 @@ public class Course implements DataInfo {
 
     public List<Student> getStudents() {
         return students;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public Student searchStudent(String key){
