@@ -3,6 +3,7 @@ package GUI;
 import UserManagement.User;
 import UserManagement.Student;
 import UserManagement.Instructor;
+import UserManagement.Admin;
 import Database.UserService;
 import Utilities.*;
 
@@ -33,23 +34,20 @@ public class login extends JFrame {
         setLocationRelativeTo(null);
         setContentPane(mainPanel);
 
-
         loginCard.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
                 BorderFactory.createEmptyBorder(40, 60, 40, 60)
         ));
 
-
         roleBox.addItem("Student");
         roleBox.addItem("Instructor");
-
+        roleBox.addItem("Admin");
 
         loginButton.addActionListener(e -> processLogin());
         signupButton.addActionListener(e -> {
             new signUp();
             dispose();
         });
-
 
         usernameField.addActionListener(e -> passwordField.requestFocus());
         passwordField.addActionListener(e -> processLogin());
@@ -90,11 +88,12 @@ public class login extends JFrame {
             return;
         }
 
-
         if (loggedUser.getRole().equalsIgnoreCase("Student")) {
             new stdMainWindow((Student) loggedUser);
-        } else {
+        } else if (loggedUser.getRole().equalsIgnoreCase("Instructor")) {
             new insMainWindow((Instructor) loggedUser);
+        } else if (loggedUser.getRole().equalsIgnoreCase("Admin")) {
+            new AdminDashboard((Admin) loggedUser);
         }
 
         dispose();
