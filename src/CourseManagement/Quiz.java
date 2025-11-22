@@ -49,6 +49,14 @@ public class Quiz {
         return (double) correctCount / questions.size() * 100;
     }
 
-
-
+    public List<Boolean> getCorrectAnswers(List<Integer> userAnswers) {
+        if(userAnswers.size() != questions.size()) {
+            throw new IllegalArgumentException("Number of user answers must match number of questions.");
+        }
+        List<Boolean> correctAnswers = new ArrayList<>();
+        for(int i = 0; i < questions.size(); i++) {
+            correctAnswers.add(questions.get(i).isCorrect(userAnswers.get(i)));
+        }
+        return correctAnswers;
+    }
 }
