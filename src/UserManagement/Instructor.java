@@ -166,4 +166,8 @@ public class Instructor extends User {
     public List<String> getCoursesID(){
         return Collections.unmodifiableList(coursesID);
     }
+
+    public void addCourseID(String courseId){
+        coursesID.add(courseId);
+    }
 }

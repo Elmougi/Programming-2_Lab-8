@@ -76,8 +76,25 @@ public class UserService extends JsonDatabaseManager<User> {
             retrieveCertificates(userObj, student);
 
             user = student;
-        } else {
-            user = new Instructor(
+        } else if( userObj.getString("role").equals("Instructor")) {
+            Instructor instructor = new Instructor(
+                    userObj.getString("name"),
+                    userObj.getString("id"),
+                    userObj.getString("email"),
+                    userObj.getString("password")
+            );
+
+            if (userObj.containsKey("courses")) {
+                JsonArray coursesArray = userObj.getJsonArray("courses");
+                for (JsonValue courseValue : coursesArray) {
+                    instructor.addCourseID(courseValue.toString());
+                }
+            }
+
+            user = instructor;
+        }
+        else {
+            user = new Admin(
                     userObj.getString("name"),
                     userObj.getString("id"),
                     userObj.getString("email"),
