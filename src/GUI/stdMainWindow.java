@@ -25,6 +25,7 @@ public class stdMainWindow extends JFrame {
     private JLabel userLabel;
     private JLabel availableLabel;
     private JLabel enrolledLabel;
+    private JButton certificatesButton;
 
     private DefaultListModel<String> availableCoursesModel;
     private DefaultListModel<String> enrolledCoursesModel;
@@ -54,7 +55,9 @@ public class stdMainWindow extends JFrame {
         openCourseButton.addActionListener(e -> onOpenCourseClicked());
         dropCourseButton.addActionListener(e -> onDropCourseClicked());
         refreshButton.addActionListener(e -> onRefreshClicked());
+        certificatesButton.addActionListener(e -> onViewCertificatesClicked());
         logoutButton.addActionListener(e -> onLogout());
+
 
         setTitle("Student Dashboard - " + student.getName());
         setSize(900, 650);
@@ -220,6 +223,10 @@ public class stdMainWindow extends JFrame {
         new CourseDetailsWindow(course, currentStudent, courseService, userService);
     }
 
+    private void onViewCertificatesClicked() {
+        new CertificateWindow(currentStudent, courseService, userService);
+    }
+
     private void onLogout() {
         int choice = JOptionPane.showConfirmDialog(this,
                 "Are you sure you want to logout?\nAll changes will be saved.",
@@ -238,6 +245,7 @@ public class stdMainWindow extends JFrame {
             new login();
         }
     }
+
 
     private void onDropCourseClicked() {
         String selectedCourse = enrolledCoursesList.getSelectedValue();

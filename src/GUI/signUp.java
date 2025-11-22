@@ -41,6 +41,7 @@ public class signUp extends JFrame {
 
         roleBox.addItem("Student");
         roleBox.addItem("Instructor");
+        roleBox.addItem("Admin");
 
 
         signUpButton.addActionListener(e -> processSignup());
@@ -134,7 +135,7 @@ public class signUp extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
 
                 new stdMainWindow((Student) newUser);
-            } else {
+            } else if (role.equalsIgnoreCase("Instructor")) {
                 newUser = new Instructor(name, String.valueOf(id), email, hashedPassword);
                 userService.insertRecord(newUser);
 
@@ -144,6 +145,18 @@ public class signUp extends JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
 
                 new insMainWindow((Instructor) newUser);
+            } else if (role.equalsIgnoreCase("Admin")) {
+                newUser = new Admin(name, String.valueOf(id), email, hashedPassword);
+                userService.insertRecord(newUser);
+
+                JOptionPane.showMessageDialog(this,
+                        "Account created successfully!\nWelcome to SkillForge, " + name + "!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                new AdminDashboard((Admin) newUser);
+            } else {
+                return;
             }
 
             dispose();

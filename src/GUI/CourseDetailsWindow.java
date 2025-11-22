@@ -97,7 +97,6 @@ public class CourseDetailsWindow extends JFrame {
 
     private void setupListeners() {
         viewLessonButton.addActionListener(e -> onViewLessonClicked());
-        markCompleteButton.addActionListener(e -> onMarkCompleteClicked());
         closeButton.addActionListener(e -> {
 
             userService.updateRecord(student.getSearchKey(), student);
@@ -120,25 +119,9 @@ public class CourseDetailsWindow extends JFrame {
         }
     }
 
-    private void onMarkCompleteClicked() {
-        int selectedIndex = lessonsList.getSelectedIndex();
-
-        if (selectedIndex >= 0 && selectedIndex < course.getLessons().size()) {
-            Lesson selectedLesson = course.getLessons().get(selectedIndex);
-            markLessonComplete(selectedLesson);
 
 
-            updateLessonsList();
-            updateProgressLabel();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Please select a lesson to mark as completed.",
-                    "No Selection",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
-    private void markLessonComplete(Lesson lesson) {
+/*    private void markLessonComplete(Lesson lesson) {
 
         boolean isCompleted = student.isLessonCompleted(course.getSearchKey(), lesson.getSearchKey());
 
@@ -150,7 +133,6 @@ public class CourseDetailsWindow extends JFrame {
         } else {
             try {
 
-                student.markLessonCompleted(course.getSearchKey(), lesson.getSearchKey());
 
 
                 userService.updateRecord(student.getSearchKey(), student);
@@ -167,6 +149,9 @@ public class CourseDetailsWindow extends JFrame {
             }
         }
     }
+
+    commented out markLessonComplete method bcz the functionality is now handled in LessonDetailsWindow after quiz completion automatically
+    */
 
 
     public void refreshDisplay() {
