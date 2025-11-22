@@ -433,7 +433,7 @@ public class insMainWindow extends JFrame {
 
     private void onLogout() {
         int choice = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to logout?\nAll changes have been saved.",
+                "Are you sure you want to logout?\n.",
                 "Confirm Logout",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);

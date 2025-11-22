@@ -18,6 +18,7 @@ public class LessonDetailsWindow extends JDialog {
     private JScrollPane contentScroll;
     private JList<String> resourcesList;
     private JScrollPane resourcesScroll;
+    private JButton takeQuizButton;
     private JButton closeButton;
 
     private DefaultListModel<String> resourcesModel;
@@ -40,7 +41,7 @@ public class LessonDetailsWindow extends JDialog {
         this.courseService = courseService;
         this.userService = userService;
 
-        setSize(700, 500);
+        setSize(700, 550);
         setLocationRelativeTo(parent);
         setContentPane(mainPanel);
 
@@ -51,17 +52,13 @@ public class LessonDetailsWindow extends JDialog {
     }
 
     private void initializeData() {
-
         titleLabel.setText("Lesson: " + lesson.getTitle());
         idLabel.setText("Lesson ID: " + lesson.getSearchKey());
 
-
         updateStatusLabel();
-
 
         contentArea.setText(lesson.getContent());
         contentArea.setCaretPosition(0);
-
 
         resourcesModel = new DefaultListModel<>();
         resourcesList.setModel(resourcesModel);
@@ -83,8 +80,8 @@ public class LessonDetailsWindow extends JDialog {
     }
 
     private void setupListeners() {
+        takeQuizButton.addActionListener(e -> onTakeQuizClicked());
         closeButton.addActionListener(e -> {
-
             if (parentWindow != null) {
                 parentWindow.refreshDisplay();
             }
@@ -92,5 +89,24 @@ public class LessonDetailsWindow extends JDialog {
         });
     }
 
+    private void onTakeQuizClicked() {
+        if (lesson.getQuiz() == null || lesson.getQuiz().getQuestions().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No quiz available for this lesson.",
+                    "No Quiz",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 
+        new QuizWindow(this, lesson, course, student, courseService, userService);
+
+        updateStatusLabel();
+        if (parentWindow != null) {
+            parentWindow.refreshDisplay();
+        }
+    }
+
+    public void refreshDisplay() {
+        updateStatusLabel();
+    }
 }

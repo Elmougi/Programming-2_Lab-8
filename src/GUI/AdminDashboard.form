@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.AdminDashboard">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+    <margin top="15" left="15" bottom="15" right="15"/>
+    <constraints>
+      <xy x="20" y="20" width="900" height="700"/>
+    </constraints>
+    <properties>
+      <background color="-1118482"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="headerPanel" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="welcomeLabel" class="javax.swing.JLabel" binding="welcomeLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial" size="24" style="1"/>
+              <foreground color="-15709559"/>
+              <text value="Admin Dashboard"/>
+            </properties>
+          </component>
+          <component id="userLabel" class="javax.swing.JLabel" binding="userLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial" size="14"/>
+              <foreground color="-8355712"/>
+              <text value="Welcome, Admin"/>
+            </properties>
+          </component>
+          <component id="logoutButton" class="javax.swing.JButton" binding="logoutButton">
+            <constraints>
+              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="120" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-2039584"/>
+              <font name="Arial" size="13" style="1"/>
+              <foreground color="-1"/>
+              <text value="Logout"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="contentPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="line" title="Pending Course Approvals" title-justification="2">
+          <font name="Arial" size="16" style="1"/>
+          <title-color color="-16777216"/>
+        </border>
+        <children>
+          <component id="refreshButton" class="javax.swing.JButton" binding="refreshButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-15709559"/>
+              <font name="Arial" size="12" style="1"/>
+              <foreground color="-1"/>
+              <text value="Refresh Course List"/>
+            </properties>
+          </component>
+          <scrollpane id="tableScrollPane" binding="tableScrollPane">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="coursesTable" class="javax.swing.JTable" binding="coursesTable">
+                <constraints/>
+                <properties>
+                  <font name="Arial" size="12"/>
+                  <gridColor color="-4473925"/>
+                  <selectionBackground color="-15709559"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="buttonPanel" layout-manager="GridLayoutManager" row-count="1" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="-1">
+        <margin top="10" left="10" bottom="10" right="10"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <hspacer id="leftSpacer">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="viewDetailsButton" class="javax.swing.JButton" binding="viewDetailsButton">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="130" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <font name="Arial" size="12"/>
+              <text value="View Details"/>
+            </properties>
+          </component>
+          <hspacer id="spacer1">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="10" height="-1"/>
+              </grid>
+            </constraints>
+          </hspacer>
+          <component id="approveButton" class="javax.swing.JButton" binding="approveButton">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="130" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-16744448"/>
+              <font name="Arial" size="12" style="1"/>
+              <foreground color="-1"/>
+              <text value="Approve"/>
+            </properties>
+          </component>
+          <hspacer id="spacer2">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="10" height="-1"/>
+              </grid>
+            </constraints>
+          </hspacer>
+          <component id="rejectButton" class="javax.swing.JButton" binding="rejectButton">
+            <constraints>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="130" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-2039584"/>
+              <font name="Arial" size="12" style="1"/>
+              <foreground color="-1"/>
+              <text value="Reject"/>
+            </properties>
+          </component>
+          <hspacer id="rightSpacer">
+            <constraints>
+              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
