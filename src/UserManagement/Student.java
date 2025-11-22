@@ -127,22 +127,6 @@ public class Student extends User{
 
     }
 
-    public void updateLessonId(String courseID, String oldLessonID, String newLessonID) {
-        if (progress.containsKey(courseID)) {
-            CourseProgress courseProgress = progress.get(courseID);
-            courseProgress.updateProgressLessonID(oldLessonID, newLessonID);
-        }
-    }
-
-    public void updateCourseId(String oldCourseID, String newCourseID) {
-        if (progress.containsKey(oldCourseID)) {
-
-            CourseProgress courseProgress = progress.get(oldCourseID);
-            progress.remove(oldCourseID);
-            progress.put(newCourseID, courseProgress);
-        }
-    }
-
     public Map<String, Map<String, Double>> getProgress() {
         Map<String, Map<String, Double>> res = new HashMap<>();
         for (String courseID : progress.keySet()) {
@@ -160,4 +144,24 @@ public class Student extends User{
             this.progress.put(courseID, courseProgress);
         }
     }
+
+   /* public int getTotalAttemptOfQuiz(String courseID, String lessonID) {
+        int totalAttempts = 0;
+        if(progress.containsKey(courseID)) {
+            CourseProgress courseProgress = progress.get(courseID);
+            totalAttempts = courseProgress.getTotalAttempts(lessonID);
+
+        return totalAttempts;
+    }*/
+   /*
+    public boolean isQuizCompleted(String courseID, String lessonID) {
+
+            if(progress.containsKey(courseID)) {
+            CourseProgress courseProgress = progress.get(courseID);
+            return courseProgress.isLessonCompleted(lessonID);
+        }
+
+    }*/
+
+
 }
