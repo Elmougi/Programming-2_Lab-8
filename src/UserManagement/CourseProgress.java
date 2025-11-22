@@ -110,6 +110,11 @@ class CourseProgress {
     public Map<String, Double> getQuizScores() {
         return quizScores;
     }
+/*
+    public int getTotalAttempts(String lessonID) {
+        // For future use
+        return 0;
+    }*/
 
 
 }

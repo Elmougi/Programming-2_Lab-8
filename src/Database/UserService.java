@@ -131,8 +131,7 @@ public class UserService extends JsonDatabaseManager<User> {
 
     private void retrieveCertificates(JsonObject userObj, Student student) {
         if (userObj.containsKey("certificates")) {
-            JsonObject certificatesObj = userObj.getJsonObject("certificates");
-            JsonArray certificatesArray = certificatesObj.getJsonArray("certificates");
+            JsonArray certificatesArray = userObj.getJsonArray("certificates");
 
             for (JsonValue certificateValue : certificatesArray) {
                 JsonObject certificateObj = (JsonObject) certificateValue;
