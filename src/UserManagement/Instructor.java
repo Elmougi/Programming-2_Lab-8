@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Instructor extends User {
+    private List<String> coursesID = new ArrayList<>();
+
     public Instructor(String name, String ID, String email, String password){
         super(name, ID, email, password);
         this.role = "Instructor";
@@ -19,6 +21,7 @@ public class Instructor extends User {
 
     public void createCourse(CourseService courseService, String courseId, String title, String description, List<Lesson> lessons){
         Course newCourse = new Course(courseId, title, description, this.getSearchKey(), lessons);
+        coursesID.add(courseId);
         courseService.insertRecord(newCourse);
     }
 
@@ -63,6 +66,7 @@ public class Instructor extends User {
     }
 
     public void deleteCourse(CourseService courseService, String courseId){
+        coursesID.remove(courseId);
         courseService.deleteRecord(courseId);
     }
 
@@ -157,5 +161,9 @@ public class Instructor extends User {
         courseService.updateRecord(courseId, existingCourse);
 
         return Collections.unmodifiableList(enrolledStudents);
+    }
+
+    public List<String> getCoursesID(){
+        return Collections.unmodifiableList(coursesID);
     }
 }
