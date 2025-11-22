@@ -104,8 +104,8 @@ public class UserService extends JsonDatabaseManager<User> {
         return user;
     }
 
-    private Map<String, Map<String, Boolean>> retrieveProgress(JsonObject userObj) {
-        Map<String, Map<String, Boolean>> progress = new HashMap<>();
+    private Map<String, Map<String, Double>> retrieveProgress(JsonObject userObj) {
+        Map<String, Map<String, Double>> progress = new HashMap<>();
 
         if (userObj.containsKey("progress")) {
             JsonObject progressObj = userObj.getJsonObject("progress");
@@ -118,12 +118,12 @@ public class UserService extends JsonDatabaseManager<User> {
         return progress;
     }
 
-    private Map<String, Boolean> retrieveLessonProgress(JsonObject progressObj, String courseId) {
+    private Map<String, Double> retrieveLessonProgress(JsonObject progressObj, String courseId) {
         JsonObject lessonProgressObj = progressObj.getJsonObject(courseId);
-        Map<String, Boolean> lessonProgress = new HashMap<>();
+        Map<String, Double> lessonProgress = new HashMap<>();
 
         for (String lessonId : lessonProgressObj.keySet()) {
-            lessonProgress.put(lessonId, lessonProgressObj.getBoolean(lessonId));
+            lessonProgress.put(lessonId, lessonProgressObj.getJsonNumber(lessonId).doubleValue());
         }
 
         return lessonProgress;
@@ -152,19 +152,19 @@ public class UserService extends JsonDatabaseManager<User> {
     private JsonObject buildProgress(Student student) {
         // object of objects
         JsonObjectBuilder progressBuilder = Json.createObjectBuilder();
-        Map<String, Map<String, Boolean>> progress = student.getProgress();
+        Map<String, Map<String, Double>> progress = student.getProgress();
 
-        for (Map.Entry<String, Map<String, Boolean>> courseEntry : progress.entrySet()) {
+        for (Map.Entry<String, Map<String, Double>> courseEntry : progress.entrySet()) {
             progressBuilder.add(courseEntry.getKey(), buildLessonProgress(courseEntry.getValue()));
         }
 
         return progressBuilder.build();
     }
 
-    private JsonObject buildLessonProgress(Map<String, Boolean> lessonProgress) {
+    private JsonObject buildLessonProgress(Map<String, Double> lessonProgress) {
         JsonObjectBuilder lessonProgressBuilder = Json.createObjectBuilder();
 
-        for (Map.Entry<String, Boolean> entry : lessonProgress.entrySet()) {
+        for (Map.Entry<String, Double> entry : lessonProgress.entrySet()) {
             lessonProgressBuilder.add(entry.getKey(), entry.getValue());
         }
 
