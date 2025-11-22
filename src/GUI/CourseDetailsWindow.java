@@ -70,7 +70,7 @@ public class CourseDetailsWindow extends JFrame {
             lessonsModel.addElement("No lessons available yet.");
         } else {
 
-            List<Lesson> allLessons = student.getAllLessons(courseService, course.getSearchKey());
+            List<Lesson> allLessons = courseService.getRecord(course.getSearchKey()).getLessons();
 
             for (int i = 0; i < allLessons.size(); i++) {
                 Lesson lesson = allLessons.get(i);
