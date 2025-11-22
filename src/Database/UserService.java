@@ -11,12 +11,12 @@ import UserManagement.*;
  */
 
 public class UserService extends JsonDatabaseManager<User> {
-    public UserService(){
+    public UserService() {
         super("user");
     }
 
     @Override
-    public ArrayList<User> recordsFromJson(JsonObject all){
+    public ArrayList<User> recordsFromJson(JsonObject all) {
         ArrayList<User> users = new ArrayList<>();
         JsonArray usersArray = all.getJsonArray("users");
 
@@ -29,7 +29,7 @@ public class UserService extends JsonDatabaseManager<User> {
     }
 
     @Override
-    public JsonObject recordsToJson(ArrayList<User> users){
+    public JsonObject recordsToJson(ArrayList<User> users) {
         // object of arrays -> key:array_of_users
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
@@ -43,8 +43,10 @@ public class UserService extends JsonDatabaseManager<User> {
 
 
             if (user instanceof Student) {
-                userBuilder.add("progress", buildProgress((Student)  user));
+                userBuilder.add("progress", buildProgress((Student) user));
                 userBuilder.add("certificates", buildCertificates((Student) user));
+            } else if (user instanceof Instructor) {
+                userBuilder.add("courses", buildCoursesList((Instructor) user));
             }
 
             arrayBuilder.add(userBuilder.build());
@@ -58,11 +60,11 @@ public class UserService extends JsonDatabaseManager<User> {
     // --------------------------------------------------------------------------------------------
     // retrieve peripherals:
 
-    private User retrieveUser(JsonValue value){
+    private User retrieveUser(JsonValue value) {
         User user;
         JsonObject userObj = (JsonObject) value;
 
-        if(userObj.getString("role").equals("Student")){
+        if (userObj.getString("role").equals("Student")) {
             Student student = new Student(
                     userObj.getString("name"),
                     userObj.getString("id"),
@@ -74,8 +76,25 @@ public class UserService extends JsonDatabaseManager<User> {
             retrieveCertificates(userObj, student);
 
             user = student;
-        } else {
-            user = new Instructor(
+        } else if( userObj.getString("role").equals("Instructor")) {
+            Instructor instructor = new Instructor(
+                    userObj.getString("name"),
+                    userObj.getString("id"),
+                    userObj.getString("email"),
+                    userObj.getString("password")
+            );
+
+            if (userObj.containsKey("courses")) {
+                JsonArray coursesArray = userObj.getJsonArray("courses");
+                for (JsonValue courseValue : coursesArray) {
+                    instructor.addCourseID(courseValue.toString());
+                }
+            }
+
+            user = instructor;
+        }
+        else {
+            user = new Admin(
                     userObj.getString("name"),
                     userObj.getString("id"),
                     userObj.getString("email"),
@@ -99,7 +118,7 @@ public class UserService extends JsonDatabaseManager<User> {
         return progress;
     }
 
-    private Map<String, Boolean> retrieveLessonProgress(JsonObject progressObj, String courseId){
+    private Map<String, Boolean> retrieveLessonProgress(JsonObject progressObj, String courseId) {
         JsonObject lessonProgressObj = progressObj.getJsonObject(courseId);
         Map<String, Boolean> lessonProgress = new HashMap<>();
 
@@ -110,7 +129,7 @@ public class UserService extends JsonDatabaseManager<User> {
         return lessonProgress;
     }
 
-    private void retrieveCertificates(JsonObject userObj, Student student){
+    private void retrieveCertificates(JsonObject userObj, Student student) {
         if (userObj.containsKey("certificates")) {
             JsonObject certificatesObj = userObj.getJsonObject("certificates");
             JsonArray certificatesArray = certificatesObj.getJsonArray("certificates");
@@ -152,7 +171,7 @@ public class UserService extends JsonDatabaseManager<User> {
         return lessonProgressBuilder.build();
     }
 
-    private JsonObject buildCertificates(Student student) {
+    private JsonArray buildCertificates(Student student) {
         // array of objects
         JsonArrayBuilder certificatesArrayBuilder = Json.createArrayBuilder();
 
@@ -164,8 +183,16 @@ public class UserService extends JsonDatabaseManager<User> {
                     .build());
         }
 
-        return Json.createObjectBuilder()
-                .add("certificates", certificatesArrayBuilder.build())
-                .build();
+        return certificatesArrayBuilder.build();
+    }
+
+    private JsonArray buildCoursesList(Instructor instructor) {
+        JsonArrayBuilder coursesArrayBuilder = Json.createArrayBuilder();
+
+        for (String courseID : instructor.getCoursesID()) {
+            coursesArrayBuilder.add(courseID);
+        }
+
+        return coursesArrayBuilder.build();
     }
 }
