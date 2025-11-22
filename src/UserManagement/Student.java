@@ -245,10 +245,7 @@ public class Student extends User{
         for (String courseID : progress.keySet()) {
             Map<String, Double> lessonProgress = progress.get(courseID);
             CourseProgress courseProgress = new CourseProgress(lessonProgress);
-            for (String lessonID : lessonProgress.keySet()) {
-                Double score = lessonProgress.get(lessonID);
-                courseProgress.markLessonProgressCompleted(lessonID, score);
-            }
+
             this.progress2.put(courseID, courseProgress);
         }
     }
