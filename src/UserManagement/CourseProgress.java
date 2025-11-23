@@ -119,15 +119,25 @@ public class CourseProgress {
 
     // Elmougi sends his regards
     public void incrementQuizAttempt(String lessonID) {
+        // If lesson doesn't exist in progress, add it
         if (!lessonsID.contains(lessonID)) {
-            throw new IllegalArgumentException("Invalid Lesson ID");
+            lessonsID.add(lessonID);
+            isCompleted.add(false);
+            quizScores.put(lessonID, 0.0);
+            quizAttempts.put(lessonID, 0);
         }
+
+        // Increment attempt counter
         quizAttempts.put(lessonID, quizAttempts.getOrDefault(lessonID, 0) + 1);
     }
 
     public int getTotalAttempts(String lessonID) {
         if (!lessonsID.contains(lessonID)) {
             return 0;
+        }
+        // Initialize if missing
+        if (!quizAttempts.containsKey(lessonID)) {
+            quizAttempts.put(lessonID, 0);
         }
         return quizAttempts.getOrDefault(lessonID, 0);
     }

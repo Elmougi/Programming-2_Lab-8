@@ -189,11 +189,19 @@ public class ChartFrame extends JFrame {
             g2dRotated.drawString("Total Score", -(chartY + chartHeight / 2 + 30), chartX - 60);
             g2dRotated.dispose();
 
+            double maxScore = 0;
+            for (double score : data.values()) {
+                if (score > maxScore) maxScore = score;
+            }
+
+            maxScore = Math.ceil(maxScore / 100) * 100;
+            if (maxScore == 0) maxScore = 100;
+
             g2d.setColor(Color.WHITE);
             g2d.setFont(new Font("Arial", Font.PLAIN, 15));
             for (int i = 0; i <= 10; i++) {
                 int y = chartY + chartHeight - (i * chartHeight / 10);
-                double value = (100 / 10) * i;
+                double value = (maxScore / 10) * i;
 
                 g2d.drawString(String.format("%.0f", value), chartX - 35, y + 5);
                 g2d.setColor(Color.LIGHT_GRAY);
@@ -211,7 +219,7 @@ public class ChartFrame extends JFrame {
                 String studentId = entry.getKey();
                 double score = entry.getValue();
 
-                int barHeight = (int) ((score / 100) * chartHeight);
+                int barHeight = (int) ((score / maxScore) * chartHeight);
                 int barY = chartY + chartHeight - barHeight;
 
                 g2d.setColor(new Color(77, 10, 255)); // Forest Green

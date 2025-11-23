@@ -166,5 +166,11 @@ public class Student extends User{
         return progress.get(courseID).getTotalAttempts(lessonID);
     }
 
+    public void syncProgressWithCourse(CourseService courseService, String courseId) {
+        Course course = courseService.getRecord(courseId);
+        if (course != null && progress.containsKey(courseId)) {
+            progress.get(courseId).updateCourseProgress(course);
+        }
+    }
 
 }
