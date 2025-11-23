@@ -1,3 +1,4 @@
+
 package GUI;
 
 import javax.swing.*;
@@ -7,6 +8,10 @@ import java.util.*;
 import Database.*;
 import UserManagement.*;
 import Utilities.Validation;
+import java.util.LinkedHashMap;
+import UserManagement.CourseAnalytics;
+import UserManagement.LessonAnalytics;
+
 public class insMainWindow extends JFrame {
     private JPanel MainPanel;
     private JTabbedPane mainTaps;
@@ -417,8 +422,8 @@ public class insMainWindow extends JFrame {
             }
         });
 
-       // to be implemented
-        // viewAnalyticsButton.addActionListener(e -> onViewAnalytics());
+
+        viewAnalyticsButton.addActionListener(e -> onViewAnalytics());
 
 
         searchQuizLessonButton.addActionListener(e -> onSearchQuizLesson());
@@ -502,12 +507,12 @@ public class insMainWindow extends JFrame {
     this will show the analytics for the selected course
     - bar chart for student progress
     - pie chart for quiz performance
-    - list of top performing students
+    - list of top performing students*/
 
     private void onViewAnalytics() {
-        String selectedCourse = (String) courseSelectComboBox.getSelectedItem();
+        String selectedItem = (String) courseSelectComboBox.getSelectedItem();
 
-        if (selectedCourse == null || selectedCourse.isEmpty()) {
+        if (selectedItem == null || selectedItem.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Please select a course to view analytics.",
                     "No Selection",
@@ -515,10 +520,48 @@ public class insMainWindow extends JFrame {
             return;
         }
 
+        int idStart = selectedItem.indexOf("ID: ") + 4;
+        int idEnd = selectedItem.indexOf(")", idStart);
+        String courseId = selectedItem.substring(idStart, idEnd);
 
+        Course course = courseService.getRecord(courseId);
+        if (course == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Course not found!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        List<Student> enrolledStudents = currentInstructor.enrolledStudents(
+                courseService, userService, courseId);
 
-    }*/
+        if (enrolledStudents.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No students enrolled in this course yet.",
+                    "No Data",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        CourseAnalytics courseAnalytics = new CourseAnalytics(courseId, enrolledStudents);
+
+        Map<String, Double> lessonAverages = new LinkedHashMap<>();
+        for (Lesson lesson : course.getLessons()) {
+            LessonAnalytics lessonAnalytics = new LessonAnalytics(
+                    courseId, lesson.getSearchKey(), enrolledStudents);
+
+            double avgScore = lessonAnalytics.getLessonAverageScore();
+            if (!Double.isNaN(avgScore) && avgScore > 0) {
+                lessonAverages.put(lesson.getTitle(), avgScore);
+            }
+        }
+
+        Map<String, Double> studentScores = courseAnalytics.getTotalScores();
+        double completionPercentage = courseAnalytics.getCompletionPercentage();
+
+        new ChartFrame(course.getTitle(), lessonAverages, completionPercentage, studentScores);
+    }
 
     private void onLogout() {
         int choice = JOptionPane.showConfirmDialog(this,

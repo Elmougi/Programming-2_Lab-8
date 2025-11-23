@@ -87,7 +87,7 @@ public class LessonAnalytics extends CourseAnalytics {
         }
 
         return topStudents;
-    } // what if ==? which is better?
+    }
 
 
 

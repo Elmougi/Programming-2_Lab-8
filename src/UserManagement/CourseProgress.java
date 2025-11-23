@@ -32,8 +32,15 @@ public class CourseProgress {
         }
     }
 
+   // public boolean isLessonCompleted(String lessonID) {
+     //   return isCompleted.get(this.lessonsID.indexOf(lessonID));
+
     public boolean isLessonCompleted(String lessonID) {
-        return isCompleted.get(this.lessonsID.indexOf(lessonID));
+        int index = this.lessonsID.indexOf(lessonID);
+        if (index == -1) {
+            return false; // Lesson not found in progress, so not completed
+        }
+        return isCompleted.get(index);
     }
 
     public boolean isCourseCompleted() {
