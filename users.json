@@ -2,66 +2,67 @@
 {
     "users": [
         {
-            "id": "S1234",
-            "name": "student",
-            "email": "s@s.com",
-            "password": "bd94dcda26fccb4e68d6a31f9b5aac0b571ae266d822620e901ef7ebe3a11d4f",
+            "id": "9999",
+            "name": "Muhannad",
+            "email": "muhannad@alexu.com",
+            "password": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
+            "role": "Admin"
+        },
+        {
+            "id": "1111",
+            "name": "Wael",
+            "email": "wael@gmail.com",
+            "password": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
             "role": "Student",
             "progress": {
+                "111": {
+                    "1": 100.0
+                }
             },
             "certificates": [
                 {
-                    "id": "1234_0",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-22"
-                },
-                {
-                    "id": "1234_1",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-22"
-                },
-                {
-                    "id": "1234_2",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-22"
-                },
-                {
-                    "id": "S1234_3",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-23"
-                },
-                {
-                    "id": "S1234_4",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-23"
-                },
-                {
-                    "id": "S1234_5",
-                    "courseId": "P116",
-                    "dateIssued": "2025-11-23"
-                },
-                {
-                    "id": "S1234_6",
-                    "courseId": "P116",
+                    "id": "1111_0",
+                    "courseId": "111",
                     "dateIssued": "2025-11-23"
                 }
             ]
         },
         {
-            "id": "I12345",
-            "name": "ins",
-            "email": "ins@ins.com",
-            "password": "c63c294a92e253e7f7a3e5417a95e6ae598b68d82d5136d18c8fa9d992474799",
+            "id": "7777",
+            "name": "Mohammed",
+            "email": "mohammed@gmail.com",
+            "password": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
             "role": "Instructor",
             "courses": [
             ]
         },
         {
-            "id": "A123456",
-            "name": "admin",
-            "email": "admin@admin.com",
-            "password": "e8779e0367b50fdf6f2b1d77fef879df92dcaafc3e5ef0a3b6e3867eccd2fd74",
-            "role": "Admin"
+            "id": "1112",
+            "name": "Ahmed",
+            "email": "ahmed@gg.com",
+            "password": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
+            "role": "Student",
+            "progress": {
+                "111": {
+                    "1": 0.0
+                }
+            },
+            "certificates": [
+            ]
+        },
+        {
+            "id": "1113",
+            "name": "Khaled",
+            "email": "lhaled@gg.com",
+            "password": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
+            "role": "Student",
+            "progress": {
+                "111": {
+                    "1": 0.0
+                }
+            },
+            "certificates": [
+            ]
         }
     ]
 }
