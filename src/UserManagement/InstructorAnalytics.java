@@ -12,6 +12,9 @@ public class InstructorAnalytics {
         this.ID = ID;
     }
 
+    public void addCourseID(String courseId) {
+        addCourseID(courseId, new ArrayList<>());
+    }
     public void addCourseID(String courseId, CourseService courseService) {
         coursesID.add(courseId);
         courseAnalytics.put(courseId, new CourseAnalytics(courseId, courseService.getRecord(courseId).getStudents()));
@@ -33,5 +36,10 @@ public class InstructorAnalytics {
         return courseAnalytics.get(courseId).students;
     }
 
+    public void updateStudents(String courseId, List<Student> students) {
+        if (courseAnalytics.containsKey(courseId)) {
+            courseAnalytics.put(courseId, new CourseAnalytics(courseId, students));
+        }
+    }
 
 }
