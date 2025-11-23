@@ -13,8 +13,7 @@ public class InstructorAnalytics {
     }
 
     public void addCourseID(String courseId) {
-        coursesID.add(courseId);
-        courseAnalytics.put(courseId, new CourseAnalytics(courseId, new ArrayList<>()));
+        addCourseID(courseId, new ArrayList<>());
     }
 
     public void addCourseID(String courseId, CourseService courseService) {

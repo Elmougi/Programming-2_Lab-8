@@ -23,7 +23,7 @@ public class Instructor extends User {
     public void createCourse(CourseService courseService, String courseId, String title, String description, List<Lesson> lessons){
         Course newCourse = new Course(courseId, title, description, this.getSearchKey(), lessons);
         courseService.insertRecord(newCourse);
-        analytics.addCourseID(courseId, new ArrayList<>());
+        analytics.addCourseID(courseId);
     }
 
     public void editCourseDetails(CourseService courseService, String courseId, String title, String description){
