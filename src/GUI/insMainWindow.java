@@ -422,8 +422,8 @@ public class insMainWindow extends JFrame {
             }
         });
 
-
-        viewAnalyticsButton.addActionListener(e -> onViewAnalytics());
+       // to be implemented
+        // viewAnalyticsButton.addActionListener(e -> onViewAnalytics());
 
 
         searchQuizLessonButton.addActionListener(e -> onSearchQuizLesson());
@@ -798,5 +798,9 @@ public class insMainWindow extends JFrame {
                         " [Correct: " + correctOption + "]");
             }
         }
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

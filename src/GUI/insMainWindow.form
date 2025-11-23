@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
     <margin top="15" left="15" bottom="15" right="15"/>
     <constraints>
-      <xy x="20" y="20" width="950" height="750"/>
+      <xy x="20" y="20" width="950" height="824"/>
     </constraints>
     <properties>
       <background color="-1118482"/>
@@ -47,7 +47,7 @@
               </grid>
             </constraints>
             <properties>
-              <background color="-2039584"/>
+              <background color="-12399131"/>
               <font name="Arial" size="13" style="1"/>
               <foreground color="-1"/>
               <text value="Logout"/>
@@ -347,6 +347,7 @@
                           </grid>
                         </constraints>
                         <properties>
+                          <background color="-12399131"/>
                           <font name="Arial" size="12" style="1"/>
                           <text value="Search Course"/>
                         </properties>
@@ -386,7 +387,7 @@
                               </grid>
                             </constraints>
                             <properties>
-                              <background color="-2039584"/>
+                              <background color="-2094328"/>
                               <font name="Arial" size="12" style="1"/>
                               <foreground color="-1"/>
                               <text value="Delete Course"/>
@@ -681,6 +682,7 @@
                                   </grid>
                                 </constraints>
                                 <properties>
+                                  <background color="-15709559"/>
                                   <font name="Arial" size="11"/>
                                   <text value="Add"/>
                                 </properties>
@@ -709,7 +711,7 @@
                                   </grid>
                                 </constraints>
                                 <properties>
-                                  <background color="-2039584"/>
+                                  <background color="-2094328"/>
                                   <font name="Arial" size="11"/>
                                   <foreground color="-1"/>
                                   <text value="Delete"/>
@@ -722,13 +724,14 @@
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                           </hspacer>
-                          <component id="3e1ba" class="javax.swing.JButton" binding="searchButtonL">
+                          <component id="3e1ba" class="javax.swing.JButton" binding="searchButtonL" custom-create="true">
                             <constraints>
                               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="35"/>
                               </grid>
                             </constraints>
                             <properties>
+                              <background color="-12399131"/>
                               <font name="Arial" size="12" style="1"/>
                               <text value="Search Lesson"/>
                             </properties>
@@ -798,7 +801,7 @@
                               </grid>
                             </constraints>
                             <properties>
-                              <background color="-2039584"/>
+                              <background color="-2094328"/>
                               <font name="Arial" size="12" style="1"/>
                               <foreground color="-1"/>
                               <text value="Delete Lesson"/>
@@ -1129,7 +1132,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <background color="-2039584"/>
+                          <background color="-2094328"/>
                           <font name="Arial" size="12" style="1"/>
                           <foreground color="-1"/>
                           <text value="Delete Question"/>
@@ -1173,7 +1176,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="analyticsPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+          <grid id="analyticsPanel" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
               <tabbedpane title="Analytics"/>
@@ -1187,7 +1190,7 @@
             <children>
               <component id="analyticsInfoLabel" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Arial" size="13"/>
@@ -1196,7 +1199,7 @@
               </component>
               <component id="courseSelectComboBox" class="javax.swing.JComboBox" binding="courseSelectComboBox">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Arial" size="12"/>
@@ -1204,7 +1207,7 @@
               </component>
               <component id="viewAnalyticsButton" class="javax.swing.JButton" binding="viewAnalyticsButton">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="35"/>
                   </grid>
                 </constraints>
@@ -1215,6 +1218,16 @@
                   <text value="View Analytics"/>
                 </properties>
               </component>
+              <hspacer id="19d2">
+                <constraints>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <hspacer id="cc98d">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
         </children>
