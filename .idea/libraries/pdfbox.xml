@@ -3,9 +3,10 @@
     <properties maven-id="org.apache.pdfbox:pdfbox:2.0.30" />
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/pdfbox/pdfbox/2.0.30/pdfbox-2.0.30.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/pdfbox/fontbox/2.0.30/fontbox-2.0.30.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.2/commons-logging-1.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>
 </component>
-

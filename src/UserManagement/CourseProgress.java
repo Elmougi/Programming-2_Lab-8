@@ -124,4 +124,23 @@ class CourseProgress {
         return quizAttempts;
     }
 
+
+    // Analytics per Student
+    public double getTotalScore() {
+        double total = 0.0;
+        for (double score : quizScores.values()) {
+            total += score;
+        }
+        return total;
+    }
+    public double getAverageScore() {
+        if (quizScores.isEmpty()) {
+            return 0.0;
+        }
+        return getTotalScore() / quizScores.size();
+    }
+    public Map<String, Double> getAllScores() {
+        return Collections.unmodifiableMap(quizScores);
+    }
+
 }

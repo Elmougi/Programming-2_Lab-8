@@ -6,7 +6,7 @@
             "title": "Prog",
             "description": "C langauge",
             "instructorId": "I12345",
-            "status": "REJECTED",
+            "status": "APPROVED",
             "lessons": [
                 {
                     "lessonID": "1",
@@ -46,7 +46,7 @@
             "title": "test",
             "description": "test",
             "instructorId": "I12345",
-            "status": "REJECTED",
+            "status": "APPROVED",
             "lessons": [
             ]
         }
