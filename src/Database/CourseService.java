@@ -48,7 +48,6 @@ public class CourseService extends JsonDatabaseManager<Course> {
     // retrieve peripherals:
 
     private Course retrieveCourse(JsonValue value){
-        Course course = null;
         JsonObject courseObj = (JsonObject) value;
         if(courseObj != null){
             String courseId = courseObj.getString("courseId");

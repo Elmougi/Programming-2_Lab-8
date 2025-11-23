@@ -5,8 +5,7 @@ import CourseManagement.Lesson;
 
 import java.util.*;
 
-// INCOMPLETE
-class CourseProgress {
+public class CourseProgress {
     private List<String> lessonsID = new ArrayList<>();
     private List<Boolean> isCompleted = new ArrayList<>();
     private Map<String, Double> quizScores = new HashMap<>(); // <LessonID, Score>
@@ -104,6 +103,12 @@ class CourseProgress {
     public Map<String, Double> getQuizScores() {
         return quizScores;
     }
+    public double getQuizScore(String lessonID) {
+        if (!lessonsID.contains(lessonID)) {
+            throw new IllegalArgumentException("Invalid Lesson ID");
+        }
+        return quizScores.get(lessonID);
+    }
 
     // Elmougi sends his regards
     public void incrementQuizAttempt(String lessonID) {
@@ -122,6 +127,25 @@ class CourseProgress {
 
     public Map<String, Integer> getQuizAttempts() {
         return quizAttempts;
+    }
+
+
+    // Analytics per Student
+    public double getTotalScore() {
+        double total = 0.0;
+        for (double score : quizScores.values()) {
+            total += score;
+        }
+        return total;
+    }
+    public double getAverageScore() {
+        if (quizScores.isEmpty()) {
+            return 0.0;
+        }
+        return getTotalScore() / quizScores.size();
+    }
+    public Map<String, Double> getAllScores() {
+        return Collections.unmodifiableMap(quizScores);
     }
 
 }
