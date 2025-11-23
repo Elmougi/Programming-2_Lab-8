@@ -69,6 +69,37 @@
                             }
                         ]
                     }
+                },
+                {
+                    "lessonID": "3",
+                    "title": "LEC-3",
+                    "content": "Systems",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "choose",
+                                "options": [
+                                    "wrong",
+                                    "false",
+                                    "true",
+                                    "correct"
+                                ],
+                                "correctAnswerIndex": 3
+                            },
+                            {
+                                "questionText": "choose 2.0",
+                                "options": [
+                                    "correct",
+                                    "false",
+                                    "true",
+                                    "wrong"
+                                ],
+                                "correctAnswerIndex": 0
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -114,10 +145,132 @@
         },
         {
             "courseId": "113",
-            "title": "Communication Skills",
+            "title": "Critical Thinking",
+            "description": "Thinking Critically",
+            "instructorId": "7777",
+            "status": "APPROVED",
+            "lessons": [
+                {
+                    "lessonID": "1",
+                    "title": "LEC-0",
+                    "content": "INtro",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "choose",
+                                "options": [
+                                    "correct",
+                                    "answer",
+                                    "solution",
+                                    "TRUE"
+                                ],
+                                "correctAnswerIndex": 0
+                            },
+                            {
+                                "questionText": "Choose 2.0",
+                                "options": [
+                                    "False",
+                                    "True",
+                                    "Correct",
+                                    "Answer"
+                                ],
+                                "correctAnswerIndex": 2
+                            }
+                        ]
+                    }
+                },
+                {
+                    "lessonID": "2",
+                    "title": "LEC-1",
+                    "content": "lecture2",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "choose correct answer",
+                                "options": [
+                                    "Correct answer",
+                                    "wrong answer",
+                                    "correct",
+                                    "answer"
+                                ],
+                                "correctAnswerIndex": 0
+                            },
+                            {
+                                "questionText": "Choose Correct Answer",
+                                "options": [
+                                    "Corrcet Answer",
+                                    "Correct",
+                                    "Answer",
+                                    "Correct Answer"
+                                ],
+                                "correctAnswerIndex": 3
+                            },
+                            {
+                                "questionText": "Choose Correct Answer",
+                                "options": [
+                                    "yes",
+                                    "no",
+                                    "true",
+                                    "Neither"
+                                ],
+                                "correctAnswerIndex": 3
+                            }
+                        ]
+                    }
+                },
+                {
+                    "lessonID": "3",
+                    "title": "LEC-2",
+                    "content": "lecture-2",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "Choose False Option",
+                                "options": [
+                                    "X > 1",
+                                    "1 < 2",
+                                    "0 > -1",
+                                    "|-1|> 0"
+                                ],
+                                "correctAnswerIndex": 0
+                            },
+                            {
+                                "questionText": "Choose Valid Syntax",
+                                "options": [
+                                    "2 / 0",
+                                    "2 = 2",
+                                    "2 == 2",
+                                    "2 * 2 == 4"
+                                ],
+                                "correctAnswerIndex": 2
+                            },
+                            {
+                                "questionText": "Pattern [././--] = 7 , [././ --] = 8, [././ ---]= ....?",
+                                "options": [
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "6"
+                                ],
+                                "correctAnswerIndex": 2
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "courseId": "114",
+            "title": "Control",
             "description": "",
             "instructorId": "7777",
-            "status": "PENDING",
+            "status": "REJECTED",
             "lessons": [
             ]
         }
