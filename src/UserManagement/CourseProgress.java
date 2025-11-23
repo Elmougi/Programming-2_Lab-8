@@ -103,6 +103,12 @@ public class CourseProgress {
     public Map<String, Double> getQuizScores() {
         return quizScores;
     }
+    public double getQuizScore(String lessonID) {
+        if (!lessonsID.contains(lessonID)) {
+            throw new IllegalArgumentException("Invalid Lesson ID");
+        }
+        return quizScores.get(lessonID);
+    }
 
     // Elmougi sends his regards
     public void incrementQuizAttempt(String lessonID) {

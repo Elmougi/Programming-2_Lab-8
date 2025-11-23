@@ -4,8 +4,8 @@ import UserManagement.Student;
 import java.util.*;
 
 public class CourseAnalytics {
-    private String courseId;
-    private List<Student> students;
+    protected String courseId;
+    protected List<Student> students;
 
     public CourseAnalytics(String courseId, List<Student> students) {
         this.courseId = courseId;
