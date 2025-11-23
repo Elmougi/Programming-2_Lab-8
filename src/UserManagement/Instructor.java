@@ -12,17 +12,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class Instructor extends User {
-    private List<String> coursesID = new ArrayList<>();
+    private final InstructorAnalytics analytics;
 
     public Instructor(String name, String ID, String email, String password){
         super(name, ID, email, password);
         this.role = "Instructor";
+        this.analytics = new InstructorAnalytics(ID);
     }
 
     public void createCourse(CourseService courseService, String courseId, String title, String description, List<Lesson> lessons){
         Course newCourse = new Course(courseId, title, description, this.getSearchKey(), lessons);
-        coursesID.add(courseId);
         courseService.insertRecord(newCourse);
+        analytics.addCourseID(courseId);
     }
 
     public void editCourseDetails(CourseService courseService, String courseId, String title, String description){
@@ -39,7 +40,7 @@ public class Instructor extends User {
     }
 
     public void deleteCourse(CourseService courseService, String courseId){
-        coursesID.remove(courseId);
+        analytics.removeCourseID(courseId);
         courseService.deleteRecord(courseId);
     }
 
@@ -97,16 +98,21 @@ public class Instructor extends User {
         }
 
         courseService.updateRecord(courseId, existingCourse);
+        analytics.updateStudents(courseId, enrolledStudents);
 
         return Collections.unmodifiableList(enrolledStudents);
     }
 
     public List<String> getCoursesID(){
-        return Collections.unmodifiableList(coursesID);
+        return analytics.getCoursesID();
     }
 
     public void addCourseID(String courseId){
-        coursesID.add(courseId);
+        analytics.addCourseID(courseId);
+    }
+
+    public List<Student> getStudents(String courseId) {
+        return analytics.getStudents(courseId);
     }
 }
 
