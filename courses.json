@@ -2,39 +2,70 @@
 {
     "courses": [
         {
-            "courseId": "P116",
-            "title": "Prog",
-            "description": "C langauge",
-            "instructorId": "I12345",
+            "courseId": "111",
+            "title": "Signals & Systems",
+            "description": "",
+            "instructorId": "7777",
             "status": "APPROVED",
             "lessons": [
                 {
                     "lessonID": "1",
-                    "title": "Intro",
-                    "content": "intro to cc",
+                    "title": "Intro to Signals",
+                    "content": "signals classiffications",
                     "resources": [
                     ],
                     "quiz": {
                         "questions": [
                             {
-                                "questionText": "What is C",
+                                "questionText": "All periodic signals are ...... siganls",
                                 "options": [
-                                    "python langugae",
-                                    "pogramming langugae",
-                                    "script language",
-                                    "programming letter"
+                                    "Power",
+                                    "Energy",
+                                    "Neither",
+                                    "More Info Needed"
                                 ],
-                                "correctAnswerIndex": 1
+                                "correctAnswerIndex": 3
                             },
                             {
-                                "questionText": "question 2",
+                                "questionText": "What are aperiodic signals ?",
                                 "options": [
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "4"
+                                    "Non-periodic",
+                                    "periodic",
+                                    "Periodic but discrete",
+                                    "Periodic but Analogue"
                                 ],
                                 "correctAnswerIndex": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "lessonID": "2",
+                    "title": "Unit Step",
+                    "content": "u(t) function",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "u(t) * u(t)",
+                                "options": [
+                                    "t",
+                                    "t^2",
+                                    "u(t)",
+                                    "t u(t)"
+                                ],
+                                "correctAnswerIndex": 3
+                            },
+                            {
+                                "questionText": "t u(t) equals to ...",
+                                "options": [
+                                    "t",
+                                    "r(t)",
+                                    "u(t).u(t)",
+                                    "d(t)"
+                                ],
+                                "correctAnswerIndex": 1
                             }
                         ]
                     }
@@ -42,11 +73,31 @@
             ]
         },
         {
-            "courseId": "T112",
-            "title": "test",
-            "description": "test",
-            "instructorId": "I12345",
+            "courseId": "112",
+            "title": "Technical Writing ",
+            "description": "",
+            "instructorId": "7777",
             "status": "APPROVED",
+            "lessons": [
+                {
+                    "lessonID": "1",
+                    "title": "Intro to T.W",
+                    "content": "Abstraction Ladder",
+                    "resources": [
+                    ],
+                    "quiz": {
+                        "questions": [
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "courseId": "113",
+            "title": "Communication Skills",
+            "description": "",
+            "instructorId": "7777",
+            "status": "PENDING",
             "lessons": [
             ]
         }

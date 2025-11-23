@@ -117,7 +117,6 @@ public class AdminDashboard extends JFrame {
                 table.getColumnModel().getColumn(2).setPreferredWidth(250);
                 table.getColumnModel().getColumn(3).setPreferredWidth(100);
                 table.getColumnModel().getColumn(4).setPreferredWidth(60);
-                table.getColumnModel().getColumn(5).setPreferredWidth(80);
             }
         });
     }
@@ -134,8 +133,7 @@ public class AdminDashboard extends JFrame {
                         course.getTitle(),
                         course.getDescription().isEmpty() ? "N/A" : course.getDescription(),
                         course.getInstructorId(),
-                        course.getLessons().size(),
-                        course.getStatus()
+                        course.getLessons().size()
                 });
             }
         }
