@@ -44,10 +44,15 @@
             "role": "Student",
             "progress": {
                 "111": {
-                    "1": 0.0
+                    "1": 100.0
                 }
             },
             "certificates": [
+                {
+                    "id": "1112_0",
+                    "courseId": "111",
+                    "dateIssued": "2025-11-23"
+                }
             ]
         },
         {
