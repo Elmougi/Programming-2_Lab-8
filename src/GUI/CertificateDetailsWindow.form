@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
     <margin top="30" left="40" bottom="30" right="40"/>
     <constraints>
-      <xy x="20" y="20" width="600" height="500"/>
+      <xy x="20" y="20" width="600" height="552"/>
     </constraints>
     <properties>
       <background color="-1"/>
@@ -69,7 +69,7 @@
               <font name="Arial" size="12" style="2"/>
               <foreground color="-8355712"/>
               <horizontalAlignment value="0"/>
-              <text value="Student ID: 12345"/>
+              <text value="Student ID:"/>
             </properties>
           </component>
           <component id="completedLabel" class="javax.swing.JLabel" binding="completedLabel">
@@ -104,7 +104,7 @@
           <foreground color="-4473925"/>
         </properties>
       </component>
-      <grid id="detailsPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
+      <grid id="detailsPanel" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="5">
         <margin top="20" left="0" bottom="20" right="0"/>
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -116,37 +116,70 @@
         <children>
           <component id="certificateIdLabel" class="javax.swing.JLabel" binding="certificateIdLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Arial" size="12"/>
               <foreground color="-8355712"/>
-              <text value="Certificate ID: CERT-001"/>
+              <text value="Certificate ID:"/>
             </properties>
           </component>
           <component id="issueDateLabel" class="javax.swing.JLabel" binding="issueDateLabel">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Arial" size="12"/>
               <foreground color="-8355712"/>
-              <text value="Issue Date: 2025-01-01"/>
+              <text value="Issue Date:"/>
             </properties>
           </component>
           <component id="courseIdLabel" class="javax.swing.JLabel" binding="courseIdLabel">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Arial" size="12"/>
               <foreground color="-8355712"/>
-              <text value="Course ID: CS101"/>
+              <text value="Course ID:"/>
+            </properties>
+          </component>
+          <vspacer id="downloadSpacer">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="10"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <component id="downloadJSONButton" class="javax.swing.JButton" binding="downloadJSONButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-15709559"/>
+              <font name="Arial" size="12" style="1"/>
+              <foreground color="-1"/>
+              <text value="Download JSON"/>
+            </properties>
+          </component>
+          <component id="downloadPDFButton" class="javax.swing.JButton" binding="downloadPDFButton">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="35"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-16744448"/>
+              <font name="Arial" size="12" style="1"/>
+              <foreground color="-1"/>
+              <text value="Download PDF"/>
             </properties>
           </component>
           <component id="closeButton" class="javax.swing.JButton" binding="closeButton">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+              <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="35"/>
               </grid>
             </constraints>
@@ -155,6 +188,11 @@
               <text value="Close"/>
             </properties>
           </component>
+          <hspacer id="downloadRightSpacer">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
         </children>
       </grid>
     </children>

@@ -118,42 +118,6 @@ public class CourseDetailsWindow extends JFrame {
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-
-
-
-/*    private void markLessonComplete(Lesson lesson) {
-
-        boolean isCompleted = student.isLessonCompleted(course.getSearchKey(), lesson.getSearchKey());
-
-        if (isCompleted) {
-            JOptionPane.showMessageDialog(this,
-                    "This lesson is already marked as completed!",
-                    "Already Completed",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            try {
-
-
-
-                userService.updateRecord(student.getSearchKey(), student);
-
-                JOptionPane.showMessageDialog(this,
-                        "Lesson '" + lesson.getTitle() + "' marked as completed!",
-                        "Progress Updated",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Error marking lesson as completed: " + e.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    commented out markLessonComplete method bcz the functionality is now handled in LessonDetailsWindow after quiz completion automatically
-    */
-
-
     public void refreshDisplay() {
         updateLessonsList();
         updateProgressLabel();

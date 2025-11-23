@@ -25,44 +25,17 @@ public class Instructor extends User {
         courseService.insertRecord(newCourse);
     }
 
-    public void editCourseDetails(CourseService courseService, UserService userService, String oldCourseId, String newCourseId, String title, String description){
-        Course existingCourse = courseService.getRecord(oldCourseId);
+    public void editCourseDetails(CourseService courseService, String courseId, String title, String description){
+        Course existingCourse = courseService.getRecord(courseId);
 
         if (existingCourse == null) {
             throw new IllegalArgumentException("Course not found");
         }
 
-        boolean courseIdChanged = !oldCourseId.equals(newCourseId) && Validation.isValidString(newCourseId);
-
-
-        if(courseIdChanged) {
-
-            if (courseService.contains(newCourseId)) {
-                throw new IllegalArgumentException("Course ID '" + newCourseId + "' already exists");
-            }
-            existingCourse.setCourseId(newCourseId);
-        }
         if (Validation.isValidString(title)) existingCourse.setTitle(title);
         if(Validation.isValidString(description)) existingCourse.setDescription(description);
 
-
-        if (courseIdChanged) {
-            List<User> allUsers = userService.returnAllRecords();
-            for (User user : allUsers) {
-                if (user instanceof Student) {
-                    Student student = (Student) user;
-                    student.updateCourseId(oldCourseId, newCourseId);
-                    userService.updateRecord(student.getSearchKey(), student);
-                }
-            }
-
-
-            courseService.deleteRecord(oldCourseId);
-            courseService.insertRecord(existingCourse);
-        } else {
-
-            courseService.updateRecord(oldCourseId, existingCourse);
-        }
+        courseService.updateRecord(courseId, existingCourse);
     }
 
     public void deleteCourse(CourseService courseService, String courseId){
@@ -78,46 +51,13 @@ public class Instructor extends User {
         courseService.updateRecord(key, existingCourse);
     }
 
-    public void editLesson(CourseService courseService, UserService userService, String courseId, String oldLessonID, String newLessonID, String title, String content, List<String> resources){
-        Course existingCourse = courseService.getRecord(courseId);
-        String key = existingCourse.getSearchKey();
-
-        boolean lessonIdChanged = !oldLessonID.equals(newLessonID) && Validation.isValidString(newLessonID);
-
-
-        Lesson updatedLesson = new Lesson(
-                Validation.isValidString(newLessonID) ? newLessonID : oldLessonID,
-                title,
-                content,
-                resources
-        );
-
-
-        existingCourse.editLesson(oldLessonID, updatedLesson);
-
-
-        if (lessonIdChanged) {
-            List<User> allUsers = userService.returnAllRecords();
-            for (User user : allUsers) {
-                if (user instanceof Student) {
-                    Student student = (Student) user;
-
-                    student.updateLessonId(courseId, oldLessonID, newLessonID);
-
-                    userService.updateRecord(student.getSearchKey(), student);
-                }
-            }
-        }
-
-        courseService.updateRecord(key, existingCourse);
-    }
-
-
     public void editLesson(CourseService courseService, String courseId, String lessonID, String title, String content, List<String> resources){
         Course existingCourse = courseService.getRecord(courseId);
         String key = existingCourse.getSearchKey();
 
-        existingCourse.editLesson(lessonID, new Lesson(lessonID, title, content, resources));
+        Lesson updatedLesson = new Lesson(lessonID, title, content, resources);
+
+        existingCourse.editLesson(lessonID, updatedLesson);
 
         courseService.updateRecord(key, existingCourse);
     }
@@ -130,8 +70,6 @@ public class Instructor extends User {
         courseService.updateRecord(key, existingCourse);
     }
 
-
-    // needs to be moved to Course
     public List<Student> enrolledStudents(CourseService courseService, UserService userService, String courseId){
         Course existingCourse = courseService.getRecord(courseId);
 
@@ -171,3 +109,5 @@ public class Instructor extends User {
         coursesID.add(courseId);
     }
 }
+
+//elmougi sends his regrads changed and made sure that the course id and lesson id are not changed when editing items

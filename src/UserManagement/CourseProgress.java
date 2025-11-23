@@ -10,12 +10,14 @@ class CourseProgress {
     private List<String> lessonsID = new ArrayList<>();
     private List<Boolean> isCompleted = new ArrayList<>();
     private Map<String, Double> quizScores = new HashMap<>(); // <LessonID, Score>
+    private Map<String, Integer> quizAttempts = new HashMap<>(); // Elmougi sends his regards
 
     public CourseProgress(Course course) {
         for (var lesson : course.getLessons()) {
             lessonsID.add(lesson.getSearchKey());
             isCompleted.add(false);
             quizScores.put(lesson.getSearchKey(), 0.0);
+            quizAttempts.put(lesson.getSearchKey(), 0); // elmougi sends his regards
         }
     }
     public CourseProgress(Map<String, Double> quizScores) {
@@ -27,6 +29,7 @@ class CourseProgress {
                 isCompleted.add(true);
             }
             this.quizScores.put(lessonID, quizScores.get(lessonID));
+            this.quizAttempts.put(lessonID, 0); // elmougi sends his regards
         }
     }
 
@@ -74,6 +77,7 @@ class CourseProgress {
                 lessonsID.add(lessonID);
                 isCompleted.add(false);
                 quizScores.put(lessonID, 0.0);
+                quizAttempts.put(lessonID, 0); // elmougi sends his regards
             }
         }
 
@@ -83,19 +87,9 @@ class CourseProgress {
                 lessonsID.remove(currentLessonID);
                 isCompleted.remove(index);
                 quizScores.remove(currentLessonID);
+                quizAttempts.remove(currentLessonID); // elmougi sends his regards
             }
         } // if any lesson is removed from course, remove it from progress as well
-    }
-
-    public void updateProgressLessonID(String oldLessonID, String newLessonID) {
-        int index = lessonsID.indexOf(oldLessonID);
-        if (index != -1) {
-            lessonsID.set(index, newLessonID);
-            Double score = quizScores.remove(oldLessonID);
-            quizScores.put(newLessonID, score);
-        } else {
-            throw new IllegalArgumentException("Invalid Lesson ID");
-        }
     }
 
     public Map<String, Double> getCourseProgress(){
@@ -110,11 +104,24 @@ class CourseProgress {
     public Map<String, Double> getQuizScores() {
         return quizScores;
     }
-/*
-    public int getTotalAttempts(String lessonID) {
-        // For future use
-        return 0;
-    }*/
 
+    // Elmougi sends his regards
+    public void incrementQuizAttempt(String lessonID) {
+        if (!lessonsID.contains(lessonID)) {
+            throw new IllegalArgumentException("Invalid Lesson ID");
+        }
+        quizAttempts.put(lessonID, quizAttempts.getOrDefault(lessonID, 0) + 1);
+    }
+
+    public int getTotalAttempts(String lessonID) {
+        if (!lessonsID.contains(lessonID)) {
+            return 0;
+        }
+        return quizAttempts.getOrDefault(lessonID, 0);
+    }
+
+    public Map<String, Integer> getQuizAttempts() {
+        return quizAttempts;
+    }
 
 }

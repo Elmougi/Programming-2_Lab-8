@@ -10,6 +10,7 @@ public class Student extends User{
     private List<Certificate> certificates = new ArrayList<>();
     private Map<String, CourseProgress> progress = new HashMap<>();
 
+
     public Student(String name, String ID, String email, String password){
         super(name, ID, email, password);
         this.role = "Student";
@@ -145,23 +146,21 @@ public class Student extends User{
         }
     }
 
-   /* public int getTotalAttemptOfQuiz(String courseID, String lessonID) {
-        int totalAttempts = 0;
-        if(progress.containsKey(courseID)) {
-            CourseProgress courseProgress = progress.get(courseID);
-            totalAttempts = courseProgress.getTotalAttempts(lessonID);
 
-        return totalAttempts;
-    }*/
-   /*
-    public boolean isQuizCompleted(String courseID, String lessonID) {
-
-            if(progress.containsKey(courseID)) {
-            CourseProgress courseProgress = progress.get(courseID);
-            return courseProgress.isLessonCompleted(lessonID);
+    // elmougi sends his regards
+    public void incrementQuizAttempt(String courseID, String lessonID) {
+        if(!progress.containsKey(courseID)) {
+            throw new IllegalArgumentException("Invalid Course ID");
         }
+        progress.get(courseID).incrementQuizAttempt(lessonID);
+    }
 
-    }*/
+    public int getTotalAttemptOfQuiz(String courseID, String lessonID) {
+        if(!progress.containsKey(courseID)) {
+            return 0;
+        }
+        return progress.get(courseID).getTotalAttempts(lessonID);
+    }
 
 
 }

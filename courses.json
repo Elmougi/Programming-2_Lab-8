@@ -2,70 +2,52 @@
 {
     "courses": [
         {
-            "courseId": "CS101",
-            "title": "Java Programming",
-            "description": "Learn Java from basics to advanced",
-            "instructorId": "I001",
-            "lessons": [
-                {
-                    "lessonID": "L001",
-                    "title": "Introduction to Java",
-                    "content": "This lesson covers the basics of Java programming including syntax, variables, and data types.",
-                    "resources": [
-                    ]
-                },
-                {
-                    "lessonID": "L002",
-                    "title": "Object-Oriented Programming",
-                    "content": "Learn about classes, objects, inheritance, and polymorphism in Java.",
-                    "resources": [
-                    ]
-                },
-                {
-                    "lessonID": "L003",
-                    "title": "Java Collections Framework",
-                    "content": "Understanding ArrayList, HashMap, and other collection classes.",
-                    "resources": [
-                    ]
-                }
-            ]
-        },
-        {
-            "courseId": "WEB201",
-            "title": "Web Development",
-            "description": "Build modern web applications",
-            "instructorId": "I001",
-            "lessons": [
-                {
-                    "lessonID": "L101",
-                    "title": "HTML & CSS Basics",
-                    "content": "Learn the fundamentals of HTML structure and CSS styling.",
-                    "resources": [
-                    ]
-                },
-                {
-                    "lessonID": "L102",
-                    "title": "JavaScript Essentials",
-                    "content": "Introduction to JavaScript programming for web browsers.",
-                    "resources": [
-                    ]
-                }
-            ]
-        },
-        {
-            "courseId": "CCE116",
-            "title": "Programming 1",
-            "description": "Intro to programming using C langugae",
-            "instructorId": "12",
+            "courseId": "P116",
+            "title": "Prog",
+            "description": "C langauge",
+            "instructorId": "I12345",
+            "status": "REJECTED",
             "lessons": [
                 {
                     "lessonID": "1",
-                    "title": "intro",
-                    "content": "intro to c",
+                    "title": "Intro",
+                    "content": "intro to cc",
                     "resources": [
-                        "PDF"
-                    ]
+                    ],
+                    "quiz": {
+                        "questions": [
+                            {
+                                "questionText": "What is C",
+                                "options": [
+                                    "python langugae",
+                                    "pogramming langugae",
+                                    "script language",
+                                    "programming letter"
+                                ],
+                                "correctAnswerIndex": 1
+                            },
+                            {
+                                "questionText": "question 2",
+                                "options": [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4"
+                                ],
+                                "correctAnswerIndex": 0
+                            }
+                        ]
+                    }
                 }
+            ]
+        },
+        {
+            "courseId": "T112",
+            "title": "test",
+            "description": "test",
+            "instructorId": "I12345",
+            "status": "REJECTED",
+            "lessons": [
             ]
         }
     ]
