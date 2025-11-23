@@ -87,6 +87,26 @@
                     ],
                     "quiz": {
                         "questions": [
+                            {
+                                "questionText": "Plagarism is....",
+                                "options": [
+                                    "presenting someone else's work, ideas, or words as your own without giving proper credit to the original source",
+                                    "wrong answer",
+                                    "correct answer",
+                                    "IDK"
+                                ],
+                                "correctAnswerIndex": 0
+                            },
+                            {
+                                "questionText": "Course Name is...",
+                                "options": [
+                                    "Critical writing",
+                                    "Technical Writing",
+                                    "T.W",
+                                    "AY 7AGA"
+                                ],
+                                "correctAnswerIndex": 1
+                            }
                         ]
                     }
                 }

@@ -105,6 +105,7 @@ public class stdMainWindow extends JFrame {
             }
 
             if (isEnrolled) {
+                currentStudent.syncProgressWithCourse(courseService, course.getSearchKey());
                 enrolledCoursesModel.addElement(courseDisplay);
             } else {
                 availableCoursesModel.addElement(courseDisplay);
