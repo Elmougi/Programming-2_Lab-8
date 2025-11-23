@@ -1,6 +1,4 @@
-package CourseManagement;
-
-import UserManagement.Student;
+package UserManagement;
 
 public class LessonAnalytics extends CourseAnalytics {
     private String lessonID;

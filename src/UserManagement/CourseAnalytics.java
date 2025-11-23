@@ -1,6 +1,5 @@
-package CourseManagement;
+package UserManagement;
 
-import UserManagement.Student;
 import java.util.*;
 
 public class CourseAnalytics {

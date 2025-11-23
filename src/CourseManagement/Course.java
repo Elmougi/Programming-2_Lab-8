@@ -120,6 +120,14 @@ public class Course implements DataInfo {
         return students;
     }
 
+    public List<String> getStudentIds() {
+        List<String> studentIds = new ArrayList<>();
+        for (Student student : students) {
+            studentIds.add(student.getSearchKey());
+        }
+        return Collections.unmodifiableList(studentIds);
+    }
+
     public String getStatus() {
         return status;
     }
