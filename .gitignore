@@ -4,6 +4,12 @@ out/
 !**/src/test/**/out/
 .kotlin
 
+### Compiled class files ###
+*.class
+
+### Libraries ###
+lib/
+
 ### Eclipse ###
 .apt_generated
 .classpath

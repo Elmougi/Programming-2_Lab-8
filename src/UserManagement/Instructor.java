@@ -22,8 +22,8 @@ public class Instructor extends User {
 
     public void createCourse(CourseService courseService, String courseId, String title, String description, List<Lesson> lessons){
         Course newCourse = new Course(courseId, title, description, this.getSearchKey(), lessons);
-        analytics.addCourseID(courseId, courseService);
         courseService.insertRecord(newCourse);
+        analytics.addCourseID(courseId, new ArrayList<>());
     }
 
     public void editCourseDetails(CourseService courseService, String courseId, String title, String description){
@@ -98,12 +98,17 @@ public class Instructor extends User {
         }
 
         courseService.updateRecord(courseId, existingCourse);
+        analytics.updateStudents(courseId, enrolledStudents);
 
         return Collections.unmodifiableList(enrolledStudents);
     }
 
     public List<String> getCoursesID(){
         return analytics.getCoursesID();
+    }
+
+    public void addCourseID(String courseId){
+        analytics.addCourseID(courseId);
     }
 
     public void addCourseID(String courseId, List<Student> students){
