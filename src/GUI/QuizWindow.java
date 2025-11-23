@@ -67,16 +67,24 @@ public class QuizWindow extends JDialog {
     }
 
     private void onStartQuiz() {
-       /* if (student.getTotalAttemptOfQuiz(course.getSearchKey() , lesson.getSearchKey() ) >= 3){
+        if (student.isLessonCompleted(course.getSearchKey(), lesson.getSearchKey())) {
             JOptionPane.showMessageDialog(this,
-                    "You have reached the maximum number of attempts for this Quiz",
-                    "No Quiz",
+                    "You have already completed this quiz successfully!",
+                    "Quiz Completed",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        int attempts = student.getTotalAttemptOfQuiz(course.getSearchKey(), lesson.getSearchKey());
+        if (attempts >= 3) {
+            JOptionPane.showMessageDialog(this,
+                    "You have reached the maximum number of attempts for this quiz.",
+                    "Max Attempts Reached",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         dispose();
-
         new QuestionsWindow(parentWindow, lesson, course, student, courseService, userService);
-    */}
+
+    }
 }

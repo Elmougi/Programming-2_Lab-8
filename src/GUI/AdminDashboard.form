@@ -55,51 +55,148 @@
           </component>
         </children>
       </grid>
-      <grid id="contentPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
-        <margin top="10" left="10" bottom="10" right="10"/>
+      <tabbedpane id="statusTabs" binding="statusTabs">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <font name="Arial" size="13" style="1"/>
         </properties>
-        <border type="line" title="Pending Course Approvals" title-justification="2">
-          <font name="Arial" size="16" style="1"/>
-          <title-color color="-16777216"/>
-        </border>
+        <border type="none"/>
         <children>
-          <component id="refreshButton" class="javax.swing.JButton" binding="refreshButton">
+          <grid id="pendingPanel" binding="pendingPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+            <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="-1" height="35"/>
-              </grid>
+              <tabbedpane title="Pending Courses"/>
             </constraints>
             <properties>
-              <background color="-15709559"/>
-              <font name="Arial" size="12" style="1"/>
-              <foreground color="-1"/>
-              <text value="Refresh Course List"/>
+              <background color="-1"/>
             </properties>
-          </component>
-          <scrollpane id="tableScrollPane" binding="tableScrollPane">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
             <border type="none"/>
             <children>
-              <component id="coursesTable" class="javax.swing.JTable" binding="coursesTable">
-                <constraints/>
+              <component id="refreshPendingButton" class="javax.swing.JButton" binding="refreshPendingButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="35"/>
+                  </grid>
+                </constraints>
                 <properties>
-                  <font name="Arial" size="12"/>
-                  <gridColor color="-4473925"/>
-                  <selectionBackground color="-15709559"/>
+                  <background color="-15709559"/>
+                  <font name="Arial" size="12" style="1"/>
+                  <foreground color="-1"/>
+                  <text value="Refresh List"/>
                 </properties>
               </component>
+              <scrollpane id="pendingScrollPane" binding="pendingScrollPane">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="pendingTable" class="javax.swing.JTable" binding="pendingTable" custom-create="true">
+                    <constraints/>
+                    <properties>
+                      <autoResizeMode value="4"/>
+                      <font name="Arial" size="12"/>
+                      <gridColor color="-4473925"/>
+                      <selectionBackground color="-15709559"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
-          </scrollpane>
+          </grid>
+          <grid id="approvedPanel" binding="approvedPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+            <margin top="10" left="10" bottom="10" right="10"/>
+            <constraints>
+              <tabbedpane title="Approved Courses"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="refreshApprovedButton" class="javax.swing.JButton" binding="refreshApprovedButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="35"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-15709559"/>
+                  <font name="Arial" size="12" style="1"/>
+                  <foreground color="-1"/>
+                  <text value="Refresh List"/>
+                </properties>
+              </component>
+              <scrollpane id="approvedScrollPane" binding="approvedScrollPane">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="approvedTable" class="javax.swing.JTable" binding="approvedTable" custom-create="true">
+                    <constraints/>
+                    <properties>
+                      <autoResizeMode value="4"/>
+                      <font name="Arial" size="12"/>
+                      <gridColor color="-4473925"/>
+                      <selectionBackground color="-16744448"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
+          <grid id="rejectedPanel" binding="rejectedPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+            <margin top="10" left="10" bottom="10" right="10"/>
+            <constraints>
+              <tabbedpane title="Rejected Courses"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="refreshRejectedButton" class="javax.swing.JButton" binding="refreshRejectedButton">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="35"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-15709559"/>
+                  <font name="Arial" size="12" style="1"/>
+                  <foreground color="-1"/>
+                  <text value="Refresh List"/>
+                </properties>
+              </component>
+              <scrollpane id="rejectedScrollPane" binding="rejectedScrollPane">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="rejectedTable" class="javax.swing.JTable" binding="rejectedTable" custom-create="true">
+                    <constraints/>
+                    <properties>
+                      <autoResizeMode value="4"/>
+                      <font name="Arial" size="12"/>
+                      <gridColor color="-4473925"/>
+                      <selectionBackground color="-2039584"/>
+                    </properties>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
         </children>
-      </grid>
+      </tabbedpane>
       <grid id="buttonPanel" layout-manager="GridLayoutManager" row-count="1" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="-1">
         <margin top="10" left="10" bottom="10" right="10"/>
         <constraints>
@@ -160,7 +257,7 @@
               </grid>
             </constraints>
             <properties>
-              <background color="-2039584"/>
+              <background color="-2031616"/>
               <font name="Arial" size="12" style="1"/>
               <foreground color="-1"/>
               <text value="Reject"/>

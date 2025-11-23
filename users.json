@@ -2,53 +2,66 @@
 {
     "users": [
         {
-            "id": "S001",
-            "name": "Ahmed Mohamed",
-            "email": "ahmed@student.com",
-            "password": "c0ea697d7e8e34c6806ed0bf70eea371393d3315a32c6cd734aa133f8e9c4207",
-            "role": "Student"
+            "id": "S1234",
+            "name": "student",
+            "email": "s@s.com",
+            "password": "bd94dcda26fccb4e68d6a31f9b5aac0b571ae266d822620e901ef7ebe3a11d4f",
+            "role": "Student",
+            "progress": {
+            },
+            "certificates": [
+                {
+                    "id": "1234_0",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-22"
+                },
+                {
+                    "id": "1234_1",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-22"
+                },
+                {
+                    "id": "1234_2",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-22"
+                },
+                {
+                    "id": "S1234_3",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-23"
+                },
+                {
+                    "id": "S1234_4",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-23"
+                },
+                {
+                    "id": "S1234_5",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-23"
+                },
+                {
+                    "id": "S1234_6",
+                    "courseId": "P116",
+                    "dateIssued": "2025-11-23"
+                }
+            ]
         },
         {
-            "id": "S002",
-            "name": "Sara Ali",
-            "email": "sara@student.com",
-            "password": "a898cdcfe1be49e02b723ead7f8e84e4915ba9e0af02def42cd7565dacf93a81",
-            "role": "Student"
+            "id": "I12345",
+            "name": "ins",
+            "email": "ins@ins.com",
+            "password": "c63c294a92e253e7f7a3e5417a95e6ae598b68d82d5136d18c8fa9d992474799",
+            "role": "Instructor",
+            "courses": [
+            ]
         },
         {
-            "id": "I001",
-            "name": "Dr. Hassan",
-            "email": "hassan@instructor.com",
-            "password": "3a8f6b2d70b34370637e84840d2b3a1ae4f240a30315f7a4dd7293f184fe6c74",
-            "role": "Instructor"
-        },
-        {
-            "id": "1234",
-            "name": "user1",
-            "email": "abc12@hj.com",
-            "password": "f282df8a7483e87dcf412f181a1395b86bc3e4f2172e8c58e094a58603db9f55",
-            "role": "Student"
-        },
-        {
-            "id": "3468",
-            "name": "student1",
-            "email": "student1@skillforge.com",
-            "password": "c2e2d6a518648f23d6ccf339ce392bc5163fa47caa4c1733685cd548ef062666",
-            "role": "Student"
-        },
-        {
-            "id": "1234456",
-            "name": "isthat true?",
-            "email": "debug@debug.com",
-            "password": "6afc0da81d4faccefecdd614597f406a18ac115d9d8ee6dd6046812fef166258",
-            "role": "Student"
-        },
-        {
-            "id": "9999",
-            "name": "fiqnw",
-            "email": "wfw@wfuh.com",
-            "password": "888df25ae35772424a560c7152a1de794440e0ea5cfee62828333a456a506e05",
-            "role": "Student"
+            "id": "A123456",
+            "name": "admin",
+            "email": "admin@admin.com",
+            "password": "e8779e0367b50fdf6f2b1d77fef879df92dcaafc3e5ef0a3b6e3867eccd2fd74",
+            "role": "Admin"
         }
     ]
 }

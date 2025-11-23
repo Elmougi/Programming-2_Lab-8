@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="fontbox" type="repository">
+    <properties maven-id="org.apache.pdfbox:fontbox:2.0.30" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/pdfbox/fontbox/2.0.30/fontbox-2.0.30.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

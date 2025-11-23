@@ -4,20 +4,38 @@ import CourseManagement.Course;
 import Database.CourseService;
 import Database.UserService;
 import UserManagement.Admin;
+import UserManagement.Student;
+
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.util.ArrayList;
-
+import java.util.*;
 public class AdminDashboard extends JFrame {
     private JPanel mainPanel;
     private JLabel welcomeLabel;
     private JLabel userLabel;
     private JButton logoutButton;
-    private JButton refreshButton;
-    private JScrollPane tableScrollPane;
-    private JTable coursesTable;
+
+    private JTabbedPane statusTabs;
+
+    private JPanel pendingPanel;
+    private JButton refreshPendingButton;
+    private JScrollPane pendingScrollPane;
+    private JTable pendingTable;
+    private DefaultTableModel pendingModel;
+
+    private JPanel approvedPanel;
+    private JButton refreshApprovedButton;
+    private JScrollPane approvedScrollPane;
+    private JTable approvedTable;
+    private DefaultTableModel approvedModel;
+
+    private JPanel rejectedPanel;
+    private JButton refreshRejectedButton;
+    private JScrollPane rejectedScrollPane;
+    private JTable rejectedTable;
+    private DefaultTableModel rejectedModel;
+
     private JButton viewDetailsButton;
     private JButton approveButton;
     private JButton rejectButton;
@@ -25,6 +43,7 @@ public class AdminDashboard extends JFrame {
     private Admin currentAdmin;
     private CourseService courseService;
     private UserService userService;
+    private Student student;
 
     public AdminDashboard(Admin admin) {
         this.currentAdmin = admin;
@@ -39,7 +58,10 @@ public class AdminDashboard extends JFrame {
 
         userLabel.setText("Welcome, " + admin.getName() + " (ID: " + admin.getSearchKey() + ")");
 
-        loadPendingCourses();
+        loadCoursesForTable(pendingModel, "PENDING");
+        loadCoursesForTable(approvedModel, "APPROVED");
+        loadCoursesForTable(rejectedModel, "REJECTED");
+
         setupListeners();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -52,7 +74,22 @@ public class AdminDashboard extends JFrame {
         setVisible(true);
     }
 
-    private void loadPendingCourses() {
+    private void createUIComponents() {
+
+        pendingModel = createTableModel();
+        pendingTable = new JTable(pendingModel);
+        configureTable(pendingTable);
+
+        approvedModel = createTableModel();
+        approvedTable = new JTable(approvedModel);
+        configureTable(approvedTable);
+
+        rejectedModel = createTableModel();
+        rejectedTable = new JTable(rejectedModel);
+        configureTable(rejectedTable);
+    }
+
+    private DefaultTableModel createTableModel() {
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -65,11 +102,33 @@ public class AdminDashboard extends JFrame {
         model.addColumn("Description");
         model.addColumn("Instructor ID");
         model.addColumn("Lessons");
-        model.addColumn("Status");
+
+
+        return model;
+    }
+
+    private void configureTable(JTable table) {
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+        SwingUtilities.invokeLater(() -> {
+            if (table.getColumnModel().getColumnCount() > 0) {
+                table.getColumnModel().getColumn(0).setPreferredWidth(80);
+                table.getColumnModel().getColumn(1).setPreferredWidth(200);
+                table.getColumnModel().getColumn(2).setPreferredWidth(250);
+                table.getColumnModel().getColumn(3).setPreferredWidth(100);
+                table.getColumnModel().getColumn(4).setPreferredWidth(60);
+                table.getColumnModel().getColumn(5).setPreferredWidth(80);
+            }
+        });
+    }
+
+    private void loadCoursesForTable(DefaultTableModel model, String status) {
+
+        model.setRowCount(0);
 
         ArrayList<Course> allCourses = courseService.returnAllRecords();
         for (Course course : allCourses) {
-            if (course.getStatus().equals("PENDING")) {
+            if (course.getStatus().equals(status)) {
                 model.addRow(new Object[]{
                         course.getSearchKey(),
                         course.getTitle(),
@@ -82,28 +141,31 @@ public class AdminDashboard extends JFrame {
         }
 
         if (model.getRowCount() == 0) {
-            model.addRow(new Object[]{"No pending courses", "-", "-", "-", "-", "-"});
+            model.addRow(new Object[]{"No " + status.toLowerCase() + " courses", "-", "-", "-", "-", "-"});
         }
-
-        coursesTable.setModel(model);
-
-        if (coursesTable.getColumnModel().getColumnCount() > 0) {
-            coursesTable.getColumnModel().getColumn(0).setPreferredWidth(80);
-            coursesTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-            coursesTable.getColumnModel().getColumn(2).setPreferredWidth(250);
-            coursesTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-            coursesTable.getColumnModel().getColumn(4).setPreferredWidth(60);
-            coursesTable.getColumnModel().getColumn(5).setPreferredWidth(80);
-        }
-
-        coursesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
 
     private void setupListeners() {
-        refreshButton.addActionListener(e -> {
-            loadPendingCourses();
+        refreshPendingButton.addActionListener(e -> {
+            loadCoursesForTable(pendingModel, "PENDING");
             JOptionPane.showMessageDialog(this,
-                    "Course list refreshed successfully!",
+                    "Pending courses refreshed!",
+                    "Refreshed",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        refreshApprovedButton.addActionListener(e -> {
+            loadCoursesForTable(approvedModel, "APPROVED");
+            JOptionPane.showMessageDialog(this,
+                    "Approved courses refreshed!",
+                    "Refreshed",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        refreshRejectedButton.addActionListener(e -> {
+            loadCoursesForTable(rejectedModel, "REJECTED");
+            JOptionPane.showMessageDialog(this,
+                    "Rejected courses refreshed!",
                     "Refreshed",
                     JOptionPane.INFORMATION_MESSAGE);
         });
@@ -114,8 +176,25 @@ public class AdminDashboard extends JFrame {
         logoutButton.addActionListener(e -> onLogout());
     }
 
+    private JTable getCurrentTable() {
+        int selectedTab = statusTabs.getSelectedIndex();
+        switch (selectedTab) {
+            case 0:
+                return pendingTable;
+            case 1:
+                return approvedTable;
+            case 2:
+                return rejectedTable;
+            default:
+                return pendingTable;
+        }
+    }
+
+
+
     private void onViewDetailsClicked() {
-        int selectedRow = coursesTable.getSelectedRow();
+        JTable currentTable = getCurrentTable();
+        int selectedRow = currentTable.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this,
@@ -125,8 +204,8 @@ public class AdminDashboard extends JFrame {
             return;
         }
 
-        String courseId = (String) coursesTable.getValueAt(selectedRow, 0);
-        if (courseId.equals("No pending courses")) {
+        String courseId = (String) currentTable.getValueAt(selectedRow, 0);
+        if (courseId.startsWith("No ")) {
             return;
         }
 
@@ -139,62 +218,12 @@ public class AdminDashboard extends JFrame {
             return;
         }
 
-        showCourseDetailsDialog(course);
-    }
-
-    private void showCourseDetailsDialog(Course course) {
-        JDialog detailsDialog = new JDialog(this, "Course Details", true);
-        detailsDialog.setSize(600, 500);
-        detailsDialog.setLocationRelativeTo(this);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 30, 20, 30));
-
-        panel.add(createInfoLabel("Course ID: " + course.getSearchKey(), true));
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(createInfoLabel("Title: " + course.getTitle(), true));
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(createInfoLabel("Description: " + (course.getDescription().isEmpty() ? "N/A" : course.getDescription()), false));
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(createInfoLabel("Instructor ID: " + course.getInstructorId(), false));
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(createInfoLabel("Status: " + course.getStatus(), false));
-        panel.add(Box.createVerticalStrut(20));
-
-        JLabel lessonsLabel = new JLabel("Lessons (" + course.getLessons().size() + "):");
-        lessonsLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        panel.add(lessonsLabel);
-        panel.add(Box.createVerticalStrut(10));
-
-        if (course.getLessons().isEmpty()) {
-            panel.add(createInfoLabel("No lessons added yet", false));
-        } else {
-            for (int i = 0; i < course.getLessons().size(); i++) {
-                panel.add(createInfoLabel((i + 1) + ". " + course.getLessons().get(i).getTitle(), false));
-                panel.add(Box.createVerticalStrut(5));
-            }
-        }
-
-        panel.add(Box.createVerticalGlue());
-
-        JButton closeBtn = new JButton("Close");
-        closeBtn.addActionListener(e -> detailsDialog.dispose());
-        panel.add(closeBtn);
-
-        detailsDialog.setContentPane(new JScrollPane(panel));
-        detailsDialog.setVisible(true);
-    }
-
-    private JLabel createInfoLabel(String text, boolean bold) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", bold ? Font.BOLD : Font.PLAIN, 13));
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return label;
+        new AdminCourseDetails(this, course);
     }
 
     private void onApproveCourse() {
-        int selectedRow = coursesTable.getSelectedRow();
+        JTable currentTable = getCurrentTable();
+        int selectedRow = currentTable.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this,
@@ -204,8 +233,8 @@ public class AdminDashboard extends JFrame {
             return;
         }
 
-        String courseId = (String) coursesTable.getValueAt(selectedRow, 0);
-        if (courseId.equals("No pending courses")) {
+        String courseId = (String) currentTable.getValueAt(selectedRow, 0);
+        if (courseId.startsWith("No ")) {
             return;
         }
 
@@ -233,12 +262,13 @@ public class AdminDashboard extends JFrame {
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            loadPendingCourses();
+            refreshAllTables();
         }
     }
 
     private void onRejectCourse() {
-        int selectedRow = coursesTable.getSelectedRow();
+        JTable currentTable = getCurrentTable();
+        int selectedRow = currentTable.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this,
@@ -248,8 +278,8 @@ public class AdminDashboard extends JFrame {
             return;
         }
 
-        String courseId = (String) coursesTable.getValueAt(selectedRow, 0);
-        if (courseId.equals("No pending courses")) {
+        String courseId = (String) currentTable.getValueAt(selectedRow, 0);
+        if (courseId.startsWith("No ")) {
             return;
         }
 
@@ -263,22 +293,55 @@ public class AdminDashboard extends JFrame {
         }
 
         int confirm = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to REJECT this course?\n\nCourse: " + course.getTitle(),
+                "Are you sure you want to REJECT this course?\n\nCourse: " + course.getTitle() +
+                        "\n\nThis will remove all enrolled students from this course.",
                 "Confirm Rejection",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.WARNING_MESSAGE);
 
         if (confirm == JOptionPane.YES_OPTION) {
+
             currentAdmin.rejectCourse(course);
+
+
+            List<Student> enrolledStudents = new ArrayList<>(); //to be ready for threads if needed in lab 9 or 10 or 200 :) i get new copy for concurrent events
+            //all the refresh buttons as well are for threads too if needed
+            ArrayList<UserManagement.User> allUsers = userService.returnAllRecords();
+
+            for (UserManagement.User user : allUsers) {
+                if (user instanceof Student) {
+                    Student student = (Student) user;
+                    if (student.getProgress().containsKey(courseId)) {
+                        enrolledStudents.add(student);
+                    }
+                }
+            }
+
+
+            for (Student enrolledStudent : enrolledStudents) {
+                enrolledStudent.dropCourse(courseService, courseId, enrolledStudent);
+                userService.updateRecord(enrolledStudent.getSearchKey(), enrolledStudent);
+            }
+
+            course.getStudents().clear();
+
             courseService.updateRecord(courseId, course);
 
             JOptionPane.showMessageDialog(this,
-                    "Course '" + course.getTitle() + "' has been rejected.",
+                    "Course '" + course.getTitle() + "' has been rejected.\n" +
+                            enrolledStudents.size() + " student(s) have been unenrolled.",
                     "Rejected",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            loadPendingCourses();
+            refreshAllTables();
         }
+    }
+
+
+    private void refreshAllTables() {
+        loadCoursesForTable(pendingModel, "PENDING");
+        loadCoursesForTable(approvedModel, "APPROVED");
+        loadCoursesForTable(rejectedModel, "REJECTED");
     }
 
     private void onLogout() {

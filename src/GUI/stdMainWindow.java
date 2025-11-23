@@ -90,6 +90,10 @@ public class stdMainWindow extends JFrame {
         List<Course> enrolledCourses = currentStudent.getEnrolledCourses(courseService);
 
         for (Course course : allCourses) {
+            if (!course.getStatus().equals("APPROVED")) {
+                continue;
+            }
+
             String courseDisplay = course.getTitle() + " (ID: " + course.getSearchKey() + ")";
 
             boolean isEnrolled = false;

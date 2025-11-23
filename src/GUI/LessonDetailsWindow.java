@@ -98,14 +98,6 @@ public class LessonDetailsWindow extends JDialog {
             return;
         }
 
-        /*else if (student.isQuizCompleted(course.getSearchKey(), lesson.getSearchKey())) {
-            JOptionPane.showMessageDialog(this,
-                    "You have taken and succeeded in the Quiz Already, You Can't take it again",
-                    "No Quiz",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }*/
-
         new QuizWindow(this, lesson, course, student, courseService, userService);
 
         updateStatusLabel();

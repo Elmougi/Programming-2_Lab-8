@@ -234,7 +234,7 @@
             </constraints>
             <properties>
               <hideActionText value="false"/>
-              <text value="My Certificates"/>
+              <text value="Certificate Earned"/>
             </properties>
           </component>
           <hspacer id="ba462">

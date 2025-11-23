@@ -141,7 +141,7 @@ public class QuestionsWindow extends JDialog {
 
             userAnswers.add(selectedAnswer);
         }
-
+        student.incrementQuizAttempt(course.getSearchKey(), lesson.getSearchKey()); //elmougi
         double score = quiz.calculateScore(userAnswers);
 
         displayResults(score, userAnswers);
@@ -167,10 +167,10 @@ public class QuestionsWindow extends JDialog {
                 correctAnswers, totalQuestions, score));
 
         if (score >= 50.0) {
-            statusLabel.setText("PASSED ✓");
+            statusLabel.setText("PASSED");
 
         } else {
-            statusLabel.setText("FAILED ✗");
+            statusLabel.setText("FAILED");
             statusLabel.setForeground(Color.RED);
         }
 
