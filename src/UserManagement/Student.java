@@ -137,6 +137,10 @@ public class Student extends User{
         return res;
     }
 
+    public CourseProgress getCourseProgress(String courseID) {
+        return progress.get(courseID);
+    }
+
     public void setProgress(Map<String, Map<String, Double>> progress) {
         for (String courseID : progress.keySet()) {
             Map<String, Double> lessonProgress = progress.get(courseID);

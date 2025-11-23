@@ -5,8 +5,7 @@ import CourseManagement.Lesson;
 
 import java.util.*;
 
-// INCOMPLETE
-class CourseProgress {
+public class CourseProgress {
     private List<String> lessonsID = new ArrayList<>();
     private List<Boolean> isCompleted = new ArrayList<>();
     private Map<String, Double> quizScores = new HashMap<>(); // <LessonID, Score>
